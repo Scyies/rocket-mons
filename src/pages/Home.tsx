@@ -11,7 +11,7 @@ export function Home() {
       <Header />
       <div className='flex justify-center pt-0'>
           <img src={whiteLogo} alt=""
-            className='pt-20 pb-6'
+            className='pt-20 pb-6 h-[35px] md:h-[64px]'
           />
       </div>
       <div className='flex flex-col justify-center items-center pb-6'>
@@ -28,10 +28,10 @@ export function Home() {
         <Button name='Já tenho conta' />
         <Button name='Quero me cadastrar' />
       </div>
-      <div className='flex justify-center'>
+      <div className='flex justify-center mt-auto'>
         <img src={catsDogs} 
           alt=""
-          className='w-[312px] md:w-[442px] pb-20'
+          className='w-[312px] md:w-[442px] pt-24 md:pt-0'
         />
       </div>
       <Footer />
