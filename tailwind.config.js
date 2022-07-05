@@ -28,11 +28,12 @@ module.exports = {
         },
         gray: {
           100: '#F6F6F6',
+          300: '#E5E5E5',
           500: '#BCBCBC',
           900: '#737380'
         },
-        neutral: {
-          100: 'FCF0E3'
+        yellow: {
+          100: '#FCF0E3'
         }
       },
     },
