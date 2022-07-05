@@ -20,10 +20,21 @@ export function LogIn() {
       </p>
 
       <form action=""
-        className="flex flex-col place-items-center mb-auto pb-44"
+        className="flex flex-col place-items-center mb-auto pb-44 mt-10"
       >
-        <Input name="Email" id="email" holder="Insira seu email" type="email" />
-        <Input name="Senha" id="senha" holder="Insira sua senha" type="password" />
+        <label htmlFor=""
+         className="text-gray-900 pb-1"
+        >
+          Email
+        </label>
+        <Input name="Email" holder="Insira seu email" type="email" />
+
+        <label htmlFor=""
+          className="text-gray-900 pb-1"
+        >
+          Senha
+        </label>
+        <Input name="Senha" holder="Insira sua senha" type="password" />
         <span className="text-red-500 text-xs underline pb-6">
           Esqueci minha senha
         </span>

@@ -28,29 +28,48 @@ export function SignIn() {
       <form action="#"
         className="px-6 flex flex-col items-center pb-10 mb-auto"
       >
+        <label htmlFor=""
+         className="text-gray-900 pb-1"
+        >
+          Email
+        </label>
         <Input 
           name="Email" 
           type="email" 
           holder="Escolha seu melhor email" 
-          id="email"
         />
+
+        <label htmlFor=""
+         className="text-gray-900 pb-1"
+        >
+          Nome
+        </label>
         <Input 
           name="Nome" 
           type="text" 
           holder="Digite seu nome completo" 
-          id="nome"
         />
+
+        <label htmlFor=""
+         className="text-gray-900 pb-1"
+        >
+          Senha
+        </label>
         <Input 
           name="Senha" 
           type="password" 
           holder="Crie uma senha"
-          id="senha"
         />
+
+        <label htmlFor=""
+         className="text-gray-900 pb-1"
+        >
+          Confirme sua senha
+        </label>
         <Input 
           name="Confirme sua senha" 
           type="password" 
           holder="Repita a senha criada acima"
-          id="confirma-senha"
         />
         <Button name="Cadastrar" />
       </form>

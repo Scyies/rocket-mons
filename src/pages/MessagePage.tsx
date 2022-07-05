@@ -13,11 +13,34 @@ export function MessagePage() {
       </h2>
 
       <form action=""
-        className="flex flex-col justify-center mx-6 bg-gray-300 rounded-md place-items-center py-8 mb-4"
+        className="flex flex-col justify-center mx-6 bg-gray-300 rounded-md text-left place-items-center py-8 mb-4"
       >
-        <Input name="Nome" id="nome" holder="Insira seu nome completo" type="text" />
-        <Input name="Telefone" id="telefone" holder="Insira seu telefone e/ou whatsapp" type="tel" />
-        <Input name="Nome do animal" id="nome-animal" holder="Por qual animal você se interessou?" type="text" />
+        <div className="flex flex-col pb-4">
+          <label htmlFor="message"
+            className="text-blue-500 pb-1 font-semibold"
+          >
+            Nome
+          </label>
+          <Input name="Nome" holder="Insira seu nome completo" type="text" />
+        </div>
+
+        <div className="flex flex-col pb-4">
+          <label htmlFor="message"
+              className="text-blue-500 pb-1 font-semibold"
+          >
+              Telefone
+          </label>
+          <Input name="Telefone" holder="Insira seu telefone e/ou whatsapp" type="tel" />
+        </div>
+
+        <div className="flex flex-col pb-4">
+          <label htmlFor="message"
+              className="text-blue-500 pb-1 font-semibold"
+          >
+              Nome do animal
+          </label>
+          <Input name="Nome do animal" holder="Por qual animal você se interessou?" type="text" />
+        </div>
 
         <div className="flex flex-col">
           <label htmlFor="message"
@@ -28,8 +51,9 @@ export function MessagePage() {
           <textarea name="message" id="message" 
             cols={15} rows={5} 
             placeholder="Escreva sua mensagem"
-            className="w-[336px] rounded-md mb-8 pl-4 pt-4"
-          ></textarea>
+            className="w-[336px] rounded-md mb-8 pl-4 pt-4 shadow-md"
+          >
+          </textarea>
         </div>
 
         <Button name="Enviar" />
