@@ -55,14 +55,15 @@ export function SignIn() {
         <Button name="Cadastrar" />
       </form>
 
-
-      <img src={pawns} 
-        alt=""
-        className="absolute -top-1 -right-2 h-[243px] md:h-[374px]"
-      />
+      <div className="absolute top-0 right-0 overflow-hidden h-[220px] w-[170px]">  
+        <img src={pawns} 
+          alt=""
+          className="absolute top-0 right-0 h-[220px] md:h-[374px] translate-x-5"
+        />
+      </div>
       <img src={leftImg} 
         alt=""
-        className="absolute top-2/4 left-0 -z-10"
+        className="absolute top-2/4 left-0 -z-10 h-[415px]"
       />
       <Footer />
     </div>
