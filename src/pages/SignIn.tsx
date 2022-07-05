@@ -58,7 +58,7 @@ export function SignIn() {
       <div className="absolute top-0 right-0 overflow-hidden h-[220px] w-[170px]">  
         <img src={pawns} 
           alt=""
-          className="absolute top-0 right-0 h-[220px] md:h-[374px] translate-x-5"
+          className="translate-x-5"
         />
       </div>
       <img src={leftImg} 
