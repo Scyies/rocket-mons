@@ -7,6 +7,11 @@ import { Input } from "../components/Inputs"
 import { Button } from "../components/Button"
 
 export function SignIn() {
+
+  function handleSignIn() {
+    alert('cadastro feito com sucesso');
+  }
+
   return (
     <div className='h-[100vh] flex flex-col'>
       <Header />
@@ -17,7 +22,7 @@ export function SignIn() {
           />
         </div>
         <div className="flex flex-col px-6 pb-6">
-          <p className="text-center text-blue-500">
+          <p className="text-center text-blue-500 mb-2">
             Ainda não tem cadastro?
           </p>
           <p className="text-center text-blue-500">
@@ -28,50 +33,59 @@ export function SignIn() {
       <form action="#"
         className="px-6 flex flex-col items-center pb-10 mb-auto"
       >
-        <label htmlFor=""
-         className="text-gray-900 pb-1"
-        >
-          Email
-        </label>
-        <Input 
-          name="Email" 
-          type="email" 
-          holder="Escolha seu melhor email" 
-        />
 
-        <label htmlFor=""
-         className="text-gray-900 pb-1"
-        >
-          Nome
-        </label>
-        <Input 
-          name="Nome" 
-          type="text" 
-          holder="Digite seu nome completo" 
-        />
+        <div className="flex flex-col text-center pb-4">
+          <label htmlFor=""
+          className="text-gray-900 pb-1"
+          >
+            Email
+          </label>
+          <Input 
+            name="Email" 
+            type="email" 
+            holder="Escolha seu melhor email" 
+          />
+        </div>
 
-        <label htmlFor=""
-         className="text-gray-900 pb-1"
-        >
-          Senha
-        </label>
-        <Input 
-          name="Senha" 
-          type="password" 
-          holder="Crie uma senha"
-        />
+        <div className="flex flex-col text-center pb-4">
+          <label htmlFor=""
+          className="text-gray-900 pb-1"
+          >
+            Nome
+          </label>
+          <Input 
+            name="Nome" 
+            type="text" 
+            holder="Digite seu nome completo" 
+          />
+        </div>
 
-        <label htmlFor=""
-         className="text-gray-900 pb-1"
-        >
-          Confirme sua senha
-        </label>
-        <Input 
-          name="Confirme sua senha" 
-          type="password" 
-          holder="Repita a senha criada acima"
-        />
-        <Button name="Cadastrar" />
+        <div className="flex flex-col text-center pb-4">
+          <label htmlFor=""
+          className="text-gray-900 pb-1"
+          >
+            Senha
+          </label>
+          <Input 
+            name="Senha" 
+            type="password" 
+            holder="Crie uma senha"
+          />
+        </div>
+
+        <div className="flex flex-col text-center pb-4">
+          <label htmlFor=""
+          className="text-gray-900 pb-1"
+          >
+            Confirme sua senha
+          </label>
+          <Input 
+            name="Confirme sua senha" 
+            type="password" 
+            holder="Repita a senha criada acima"
+          />
+        </div>
+        <Button name="Cadastrar" click={handleSignIn} />
       </form>
 
       <div className="absolute top-0 right-0 overflow-hidden h-[220px] w-[170px]">  

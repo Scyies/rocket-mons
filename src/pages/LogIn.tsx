@@ -7,6 +7,11 @@ import { Input } from "../components/Inputs"
 import { Button } from "../components/Button"
 
 export function LogIn() {
+
+  function handleSubmit() {
+    alert('subit')
+  }
+
   return (
     <div className="h-[100vh] flex flex-col justify-between">
       <Header />
@@ -22,23 +27,27 @@ export function LogIn() {
       <form action=""
         className="flex flex-col place-items-center mb-auto pb-44 mt-10"
       >
-        <label htmlFor=""
-         className="text-gray-900 pb-1"
-        >
-          Email
-        </label>
-        <Input name="Email" holder="Insira seu email" type="email" />
-
-        <label htmlFor=""
+        <div className="flex flex-col text-center pb-4">
+          <label htmlFor=""
           className="text-gray-900 pb-1"
-        >
-          Senha
-        </label>
-        <Input name="Senha" holder="Insira sua senha" type="password" />
-        <span className="text-red-500 text-xs underline pb-6">
-          Esqueci minha senha
-        </span>
-        <Button name="Entrar" />
+          >
+            Email
+          </label>
+          <Input name="Email" holder="Insira seu email" type="email" />
+        </div>
+
+        <div className="flex flex-col text-center pb-4">
+          <label htmlFor=""
+            className="text-gray-900 pb-1"
+          >
+            Senha
+          </label>
+          <Input name="Senha" holder="Insira sua senha" type="password" />
+          <span className="text-red-500 text-xs underline mt-2">
+            Esqueci minha senha
+          </span>
+        </div>
+        <Button name="Entrar" click={handleSubmit} />
       </form>
 
       <div className="absolute top-0 right-0 overflow-hidden h-[220px] w-[170px]">  

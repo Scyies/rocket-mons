@@ -4,14 +4,9 @@ import catsDogs from '../assets/cats-dogs.svg';
 import { Button } from '../components/Button';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Home() {
-
-  // function handleSignIn() {
-  //   const navigate = useNavigate;
-  //   navigate('/signin')
-  // }
 
   return(
     <div className='bg-blue-500 h-[100vh] w-full flex flex-col justify-between'>
@@ -32,8 +27,13 @@ export function Home() {
           alt="" 
           className='absolute top-1/4 right-0 h-[405px] md:h-[664px] z-0'
         />
-        <Button name='Já tenho conta' />
-        <Button name='Quero me cadastrar' />
+        <Link to={'/log-in'}>
+          <Button name='Já tenho conta' />
+        </Link>
+
+        <Link to={'/sign-in'}>
+          <Button name='Quero me cadastrar' />
+        </Link>
       </div>
       <div className='flex justify-center relative h-full w-full'>
         <img src={catsDogs} 

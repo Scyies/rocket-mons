@@ -5,6 +5,11 @@ import { Input } from "../components/Inputs";
 import { Button } from "../components/Button";
 
 export function Profile() {
+
+  function handleSave() {
+    alert('saved data');
+  }
+
   return (
     <div>
       <Header />
@@ -75,7 +80,7 @@ export function Profile() {
           </textarea>
         </div>
 
-        <Button name="Salvar" />
+        <Button name="Salvar" click={handleSave} />
       </section>
 
       <Footer />

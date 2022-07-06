@@ -4,6 +4,11 @@ import { Header } from "../components/Header";
 import { Input } from "../components/Inputs";
 
 export function MessagePage() {
+
+  function handleSubmit() {
+    alert('submit')
+  }
+
   return (
     <div>
       <Header />
@@ -56,7 +61,7 @@ export function MessagePage() {
           </textarea>
         </div>
 
-        <Button name="Enviar" />
+        <Button name="Enviar" click={handleSubmit} />
       </form>
 
       <Footer />
