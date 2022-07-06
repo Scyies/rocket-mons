@@ -51,7 +51,7 @@ export function MessagePage() {
           <textarea name="message" id="message" 
             cols={15} rows={5} 
             placeholder="Escreva sua mensagem"
-            className="w-[336px] rounded-md mb-8 pl-4 pt-4 shadow-md"
+            className="w-[336px] md:w-[361px] rounded-md mb-8 pl-4 pt-4 shadow-md"
           >
           </textarea>
         </div>

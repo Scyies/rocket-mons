@@ -18,7 +18,7 @@ export function Profile() {
           Perfil
         </h2>
 
-        <div className="flex flex-col pb-1 w-full">
+        <div className="flex flex-col pb-1 w-[336px] md:w-[361px]">
           <label htmlFor="message"
             className="text-blue-500 pb-1 font-semibold"
           >
@@ -28,7 +28,7 @@ export function Profile() {
             <img src={defaultProfile} alt=""
               className="w-20 mb-1"
             />
-            <span className="text-red-500 text-xs underline pb-6">
+            <span className="text-red-500 text-xs pb-6 hover:underline">
               Clique na foto para editar
             </span>
           </div>
@@ -70,7 +70,7 @@ export function Profile() {
           <textarea name="message" id="message" 
             cols={15} rows={5} 
             placeholder="Escreva sua mensagem"
-            className="w-[336px] rounded-md mb-8 pl-4 pt-4 shadow-md"
+            className="w-[336px] md:w-[361px] rounded-md mb-8 pl-4 pt-4 shadow-md"
           >
           </textarea>
         </div>
