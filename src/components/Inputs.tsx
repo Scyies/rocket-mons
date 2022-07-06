@@ -1,7 +1,8 @@
 interface PropsItems{
   name: string,
   type: string,
-  holder: string,
+  holder?: string,
+  value?: string,
 }
 
 export function Input(props: PropsItems) {
@@ -10,6 +11,7 @@ export function Input(props: PropsItems) {
         type={props.type} 
         placeholder={props.holder}
         className="w-[336px] md:w-[361px] rounded-md shadow-md pl-4 py-3"
+        value={props.value}
       />
   )
 }

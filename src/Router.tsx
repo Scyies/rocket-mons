@@ -3,6 +3,7 @@ import { Adopt } from "./pages/Adopt";
 import { Home } from './pages/Home'
 import { LogIn } from "./pages/LogIn";
 import { MessagePage } from "./pages/MessagePage";
+import { Profile } from "./pages/Profile";
 import { SignIn } from "./pages/SignIn";
 
 export function Router() {
@@ -13,6 +14,7 @@ export function Router() {
       <Route path="/log-in" element={<LogIn />} />
       <Route path="/adopt" element={<Adopt />} />
       <Route path="/adoption-message" element={<MessagePage />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   )
 }
