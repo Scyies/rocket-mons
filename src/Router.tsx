@@ -12,9 +12,9 @@ export function Router() {
       <Route path="/" element={<Home />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/log-in" element={<LogIn />} />
-      <Route path="/adopt" element={<Adopt />} />
-      <Route path="/adoption-message" element={<MessagePage />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/adopt/adoption-list" element={<Adopt />} />
+      <Route path="/adopt/adoption-message" element={<MessagePage />} />
+      <Route path="/adopt/profile" element={<Profile />} />
     </Routes>
   )
 }

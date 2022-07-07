@@ -5,18 +5,57 @@ import pawns from "../assets/pawns.svg"
 import { Footer } from "../components/Footer"
 import { Input } from "../components/Inputs"
 import { Button } from "../components/Button"
+import { ChangeEvent, FormEvent, useState } from "react"
+import { gql, useMutation } from "@apollo/client"
+import { Link } from "react-router-dom"
+
+// const CREATE_NEW_USER_MUTATION = gql`
+//   mutation CreateUserAccount($name: String!, $email: String!, $senha: String!) {
+//     createUserProfile(name: $name, email: $email, password: $senha)
+//   }
+// `
+
+const CREATE_NEW_USER_MUTATION = gql`
+  mutation CreateUserAccount($name: String!, $email: String!, $password: String!) {
+    createUserProfile(data: {name: $name, email: $email, password: $password})
+  }
+`
 
 export function SignIn() {
+  const [values, setValues] = useState({
+    email: '',
+    nome: '',
+    senha: '',
+    confirmaSenha: ''
+  });
+  
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValues({...values, [e.target.name]: e.target.value});
+  }
+
+  const [createUserProfile, { loading }] = useMutation(CREATE_NEW_USER_MUTATION);
+
+  async function submitForm(e: FormEvent) {
+    e.preventDefault();
+
+    await createUserProfile({
+      variables: {
+        name: values.nome,
+        email: values.email,
+        password: values.senha
+      }
+    })
+  }
 
   function handleSignIn() {
     alert('cadastro feito com sucesso');
   }
 
   return (
-    <div className='h-[100vh] flex flex-col'>
+    <div className='min-h-[100vh] flex flex-col'>
       <Header />
       <section>
-        <div className="flex justify-center pb-6 pt-20">
+        <div className="flex justify-center pb-6">
           <img src={blueLogo} alt=""
             className="h-[35px] md:h-[64px] w-[142px]"
           />
@@ -30,7 +69,7 @@ export function SignIn() {
           </p>
         </div>
       </section>
-      <form action="#"
+      <form onSubmit={submitForm}
         className="px-6 flex flex-col items-center pb-10 mb-auto"
       >
 
@@ -41,9 +80,10 @@ export function SignIn() {
             Email
           </label>
           <Input 
-            name="Email" 
+            name="email" 
             type="email" 
-            holder="Escolha seu melhor email" 
+            holder="Escolha seu melhor email"
+            change={onChange}
           />
         </div>
 
@@ -54,9 +94,10 @@ export function SignIn() {
             Nome
           </label>
           <Input 
-            name="Nome" 
+            name="nome" 
             type="text" 
-            holder="Digite seu nome completo" 
+            holder="Digite seu nome completo"
+            change={onChange}
           />
         </div>
 
@@ -67,9 +108,10 @@ export function SignIn() {
             Senha
           </label>
           <Input 
-            name="Senha" 
+            name="senha" 
             type="password" 
             holder="Crie uma senha"
+            change={onChange}
           />
         </div>
 
@@ -80,12 +122,16 @@ export function SignIn() {
             Confirme sua senha
           </label>
           <Input 
-            name="Confirme sua senha" 
+            name="confirmaSenha" 
             type="password" 
             holder="Repita a senha criada acima"
+            change={onChange}
+            padrao={values.confirmaSenha}
           />
         </div>
+        <Link to="/adopt/adoption-list" >
         <Button name="Cadastrar" click={handleSignIn} />
+        </Link>
       </form>
 
       <div className="absolute top-0 right-0 overflow-hidden h-[220px] w-[170px]">  

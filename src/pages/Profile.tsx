@@ -11,20 +11,20 @@ export function Profile() {
   }
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header />
 
       <h2 className="text-blue-500 px-16 pt-14 pb-6 text-center">
         Esse é o perfil que aparece para responsáveis ou ONGs que recebem sua mensagem.
       </h2>
 
-      <section className="bg-gray-300 flex flex-col mx-6 mb-4 rounded-md px-4 py-8 place-items-center">
+      <section className="bg-gray-300 flex flex-col mx-6 mb-4 rounded-md px-4 md:px-8 py-8 place-items-center max-w-[550px] w-full self-center">
         <h2 className="text-gray-900 font-semibold text-center mb-4">
           Perfil
         </h2>
 
-        <div className="flex flex-col pb-1 w-[336px] md:w-[361px]">
-          <label htmlFor="message"
+        <div className="flex flex-col pb-1 w-full">
+          <label
             className="text-blue-500 pb-1 font-semibold"
           >
             Foto
@@ -39,8 +39,8 @@ export function Profile() {
           </div>
         </div>
 
-        <div className="flex flex-col pb-4">
-          <label htmlFor="message"
+        <div className="flex flex-col pb-4 w-full">
+          <label
             className="text-blue-500 pb-1 font-semibold"
           >
             Nome
@@ -48,26 +48,26 @@ export function Profile() {
           <Input name="nome" type="text" />
         </div>
 
-        <div className="flex flex-col pb-4">
-          <label htmlFor="message"
+        <div className="flex flex-col pb-4 w-full">
+          <label
             className="text-blue-500 pb-1 font-semibold"
           >
             Telefone
           </label>
-          <Input name="nome" type="text" />
+          <Input name="tel" type="tel" />
         </div>
 
-        <div className="flex flex-col pb-4">
-          <label htmlFor="message"
+        <div className="flex flex-col pb-4 w-full">
+          <label
             className="text-blue-500 pb-1 font-semibold"
           >
             Cidade
           </label>
-          <Input name="nome" type="text" />
+          <Input name="cidade" type="text" />
         </div>
 
-        <div className="flex flex-col">
-          <label htmlFor="message"
+        <div className="flex flex-col w-full">
+          <label
             className="text-blue-500 pb-4 font-semibold"
           >
             Sobre
@@ -75,7 +75,7 @@ export function Profile() {
           <textarea name="message" id="message" 
             cols={15} rows={5} 
             placeholder="Escreva sua mensagem"
-            className="w-[336px] md:w-[361px] rounded-md mb-8 pl-4 pt-4 shadow-md"
+            className="rounded-md mb-8 pl-4 pt-4 shadow-md min-w-[240px] max-w-[336px] md:max-w-[492px]"
           >
           </textarea>
         </div>

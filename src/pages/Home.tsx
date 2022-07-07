@@ -9,14 +9,14 @@ import { Link, useNavigate } from 'react-router-dom';
 export function Home() {
 
   return(
-    <div className='bg-blue-500 h-[100vh] w-full flex flex-col justify-between'>
+    <div className='bg-blue-500 min-h-[100vh] w-full flex flex-col justify-between'>
       <Header />
       <div className='flex justify-center pt-0'>
           <img src={whiteLogo} alt=""
-            className='mt-20 pb-6 w-[187px] md:w-[251px]'
+            className='pb-6 w-[187px] md:w-[251px]'
           />
       </div>
-      <div className='flex flex-col justify-center items-center pb-20'>
+      <div className='flex flex-col justify-center items-center pb-20 z-10'>
         <h1 className='text-white text-center text-2xl pb-6 z-10'>
           Boas-vindas!
         </h1>
@@ -35,7 +35,7 @@ export function Home() {
           <Button name='Quero me cadastrar' />
         </Link>
       </div>
-      <div className='flex justify-center relative h-full w-full'>
+      <div className='flex justify-center h-full w-full'>
         <img src={catsDogs} 
           alt=""
           className='h-[248px] md:h-[340px] w-[312px] md:w-[442px] absolute -bottom-10'
