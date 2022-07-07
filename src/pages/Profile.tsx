@@ -18,7 +18,7 @@ export function Profile() {
         Esse é o perfil que aparece para responsáveis ou ONGs que recebem sua mensagem.
       </h2>
 
-      <section className="bg-gray-300 flex flex-col mx-6 mb-4 rounded-md px-4 md:px-8 py-8 place-items-center max-w-[550px] w-full self-center">
+      <section className="bg-gray-300 flex flex-col mx-6 mb-4 rounded-md px-10 py-8 place-items-center max-w-[550px] w-full self-center">
         <h2 className="text-gray-900 font-semibold text-center mb-4">
           Perfil
         </h2>

@@ -41,7 +41,9 @@ export function Home() {
           className='h-[248px] md:h-[340px] w-[312px] md:w-[442px] absolute bottom-20 md:bottom-16'
         />
       </div>
-      <Footer />
+      <div className='mt-[104px] z-20'>
+        <Footer />
+      </div>
     </div>
   )
 }

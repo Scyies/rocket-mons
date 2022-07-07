@@ -18,10 +18,10 @@ export function MessagePage() {
       </h2>
 
       <form action=""
-        className="flex flex-col m-auto px-4 bg-gray-300 rounded-md place-items-center py-8 mb-12 max-w-[550px] self-center"
+        className="flex flex-col m-auto px-10 bg-gray-300 rounded-md place-items-center py-8 mb-12 max-w-[550px] self-center"
       >
         <div className="flex flex-col pb-4 w-full">
-          <label htmlFor="message"
+          <label htmlFor="Nome"
             className="text-blue-500 pb-1 font-semibold"
           >
             Nome
@@ -30,7 +30,7 @@ export function MessagePage() {
         </div>
 
         <div className="flex flex-col pb-4 w-full">
-          <label htmlFor="message"
+          <label htmlFor="Telefone"
               className="text-blue-500 pb-1 font-semibold"
           >
               Telefone
@@ -39,7 +39,7 @@ export function MessagePage() {
         </div>
 
         <div className="flex flex-col pb-4 w-full">
-          <label htmlFor="message"
+          <label htmlFor="Nome do animal"
               className="text-blue-500 pb-1 font-semibold"
           >
               Nome do animal
