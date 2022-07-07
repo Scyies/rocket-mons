@@ -9,9 +9,9 @@ import { Link, useNavigate } from 'react-router-dom';
 export function Home() {
 
   return(
-    <div className='bg-blue-500 min-h-[100vh] w-full flex flex-col justify-between'>
+    <div className='bg-blue-500 min-h-screen w-full flex flex-col justify-between'>
       <Header />
-      <div className='flex justify-center pt-0'>
+      <div className='flex justify-center'>
           <img src={whiteLogo} alt=""
             className='pb-6 w-[187px] md:w-[251px]'
           />
@@ -38,7 +38,7 @@ export function Home() {
       <div className='flex justify-center h-full w-full'>
         <img src={catsDogs} 
           alt=""
-          className='h-[248px] md:h-[340px] w-[312px] md:w-[442px] absolute -bottom-10'
+          className='h-[248px] md:h-[340px] w-[312px] md:w-[442px] absolute bottom-20 md:bottom-16'
         />
       </div>
       <Footer />
