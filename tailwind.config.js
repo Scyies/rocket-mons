@@ -8,9 +8,6 @@ module.exports = {
       'md': '768px',
       'lg': '1440px'
     },
-    flex: {
-      '2': '1 0 40%',
-    },
     extend: {
       backgroundImage: {
         'right-img': "url('./src/assets/right-img.svg')",

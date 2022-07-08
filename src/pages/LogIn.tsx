@@ -60,7 +60,7 @@ export function LogIn() {
     <div className="min-h-[100vh] flex flex-col justify-between">
       <Header />
 
-      <main className="bg-left-img bg-no-repeat bg-left-bottom">
+      <main className="bg-left-img bg-no-repeat bg-left-bottom md:bg-right-img md:bg-right md:bg-contain">
         <div className="flex justify-center pb-6">
             <img src={blueLogo} alt=""
               className="h-[35px] md:h-[64px] w-[142px]"

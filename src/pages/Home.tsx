@@ -11,7 +11,7 @@ export function Home() {
   return(
     <div className='bg-blue-500 min-h-screen w-full flex flex-col'>
       <Header />
-      <main className='bg-right-img bg-no-repeat bg-right bg-contain h-full flex-1 justify-between'>
+      <main className='bg-right-img bg-no-repeat bg-right bg-contain h-full flex-1'>
         <div className='flex justify-center'>
             <img src={whiteLogo} alt=""
               className='pb-6 w-[187px] md:w-[251px]'
