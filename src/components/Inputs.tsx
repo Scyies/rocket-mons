@@ -8,7 +8,8 @@ interface PropsItems{
   value?: string,
   change?: ChangeEventHandler, //isso vai passar a ser obrigatório depois, lembrar de mudar
   padrao?: string,
-  textcenter?: string
+  textcenter?: string,
+  required?: boolean
 }
 
 export function Input(props: PropsItems) {
@@ -23,6 +24,8 @@ export function Input(props: PropsItems) {
         onChange={props.change}
         name={props.name}
         pattern={props.padrao}
+        required={props.required}
+        autoComplete="off"
       />
   )
 }
