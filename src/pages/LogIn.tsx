@@ -74,7 +74,7 @@ export function LogIn() {
         <form onSubmit={handleSubmit}
           className="flex flex-col place-items-center mb-auto pb-44 mt-10"
         >
-          <div className="flex flex-col text-center pb-4">
+          <div className="flex flex-col text-center pb-4 w-full">
             <label htmlFor=""
             className="text-gray-900 pb-1"
             >
@@ -83,7 +83,7 @@ export function LogIn() {
             <Input name="email" textcenter="text-center" holder="Insira seu email" type="email" change={(event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)} />
           </div>
 
-          <div className="flex flex-col text-center pb-4 relative">
+          <div className="flex flex-col text-center pb-4 relative w-full max-w-[336px] md:max-w-[344px]">
             <label htmlFor=""
               className="text-gray-900 pb-1"
             >

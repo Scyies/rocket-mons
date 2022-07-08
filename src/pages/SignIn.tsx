@@ -87,7 +87,7 @@ export function SignIn() {
         className="px-6 flex flex-col items-center pb-10 mb-auto"
       >
 
-        <div className="flex flex-col text-center pb-4">
+        <div className="flex flex-col text-center pb-4 w-full">
           <label htmlFor=""
           className="text-gray-900 pb-1"
           >
@@ -102,7 +102,7 @@ export function SignIn() {
           />
         </div>
 
-        <div className="flex flex-col text-center pb-4">
+        <div className="flex flex-col text-center pb-4 w-full">
           <label htmlFor=""
           className="text-gray-900 pb-1"
           >
@@ -117,7 +117,7 @@ export function SignIn() {
           />
         </div>
 
-        <div className="flex flex-col text-center pb-4 relative">
+        <div className="flex flex-col text-center pb-4 relative w-full max-w-[336px] md:max-w-[344px]">
           <label htmlFor=""
           className="text-gray-900 pb-1"
           >
@@ -130,12 +130,12 @@ export function SignIn() {
             change={onChange}
             textcenter="text-center"
           />
-          <div className="absolute right-3 top-11 text-gray-500 cursor-pointer" onClick={changePasswordVisibility}>
+          <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-10" onClick={changePasswordVisibility}>
             {visiblePassword ? (<Eye />) : (<EyeSlash />)}
           </div>
         </div>
 
-        <div className="flex flex-col text-center pb-4 relative">
+        <div className="flex flex-col text-center pb-4 relative w-full max-w-[336px] md:max-w-[344px]">
           <label htmlFor=""
           className="text-gray-900 pb-1"
           >
@@ -149,7 +149,7 @@ export function SignIn() {
             padrao={values.confirmaSenha}
             textcenter="text-center"
           />
-          <div className="absolute right-3 top-11 text-gray-500 cursor-pointer" onClick={changePasswordVisibility}>
+          <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-10" onClick={changePasswordVisibility}>
             {visiblePassword ? (<Eye />) : (<EyeSlash />)}
           </div>
         </div>

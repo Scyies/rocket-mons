@@ -15,7 +15,7 @@ module.exports = {
         'cats-dogs': "url('assets/cats-dogs.svg')"
       },
       fontFamily: {
-        sans: 'Roboto, sans-serif',
+        sans: 'Poppins, sans-serif',
       },
       colors: {
         green: {
