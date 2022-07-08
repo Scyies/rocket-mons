@@ -10,9 +10,9 @@ module.exports = {
     },
     extend: {
       backgroundImage: {
-        'right-img': "url('./src/assets/right-img.svg')",
-        'left-img': "url('./src/assets/left-img.svg')",
-        'cats-dogs': "url('./src/assets/cats-dogs.svg')"
+        'right-img': "url('assets/right-img.svg')",
+        'left-img': "url('assets/left-img.svg')",
+        'cats-dogs': "url('assets/cats-dogs.svg')"
       },
       fontFamily: {
         sans: 'Roboto, sans-serif',
