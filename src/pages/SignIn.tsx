@@ -1,5 +1,4 @@
 import { Header } from "../components/Header"
-import leftImg from "../assets/left-img.svg"
 import blueLogo from "../assets/blue-logo.svg"
 import pawns from "../assets/pawns.svg"
 import { Footer } from "../components/Footer"
@@ -7,32 +6,27 @@ import { Input } from "../components/Inputs"
 import { Button } from "../components/Button"
 import { ChangeEvent, FormEvent, useState } from "react"
 import { gql, useMutation } from "@apollo/client"
-import { Link } from "react-router-dom"
 import { Eye, EyeSlash } from "phosphor-react"
-
-// const CREATE_NEW_USER_MUTATION = gql`
-//   mutation CreateUserAccount($name: String!, $email: String!, $senha: String!) {
-//     createUserProfile(name: $name, email: $email, password: $senha)
-//   }
-// `
+import { useNavigate } from "react-router-dom"
 
 const CREATE_NEW_USER_MUTATION = gql`
   mutation CreateUserAccount($name: String!, $email: String!, $password: String!) {
-    createUserProfile(data: {name: $name, email: $email, password: $password})
+    createUserProfile(data: {name: $name, email: $email, password: $password}) {
+      id
+    }
+    publishUserProfile(where: {email: $email}) {
+    id
+    }
   }
 `
+//o problema não ta na mutation
 
 export function SignIn() {
-  const [values, setValues] = useState({
-    email: '',
-    nome: '',
-    senha: '',
-    confirmaSenha: ''
-  });
-  
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValues({...values, [e.target.name]: e.target.value});
-  }
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+
 
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visibilityType, setVisibilityType] = useState('password');
@@ -46,6 +40,8 @@ export function SignIn() {
     } 
   }
 
+  const navigate = useNavigate();
+
   const [createUserProfile, { loading }] = useMutation(CREATE_NEW_USER_MUTATION);
 
   async function submitForm(e: FormEvent) {
@@ -53,15 +49,15 @@ export function SignIn() {
 
     await createUserProfile({
       variables: {
-        name: values.nome,
-        email: values.email,
-        password: values.senha
+        name,
+        email,
+        password
+      },
+      onCompleted: () => {
+        //isso vai ser usado para fazer o token e confirmar que está logado depois
       }
     })
-  }
-
-  function handleSignIn() {
-    alert('cadastro feito com sucesso');
+    navigate('/adopt/adoption-list');
   }
 
   return (
@@ -97,8 +93,9 @@ export function SignIn() {
             name="email" 
             type="email" 
             holder="Escolha seu melhor email"
-            change={onChange}
+            change={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
             textcenter="text-center"
+            required={true}
           />
         </div>
 
@@ -109,11 +106,12 @@ export function SignIn() {
             Nome
           </label>
           <Input 
-            name="nome" 
+            name="name" 
             type="text" 
             holder="Digite seu nome completo"
-            change={onChange}
+            change={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
             textcenter="text-center"
+            required={true}
           />
         </div>
 
@@ -124,11 +122,12 @@ export function SignIn() {
             Senha
           </label>
           <Input 
-            name="senha" 
+            name="password" 
             type={visibilityType} 
             holder="Crie uma senha"
-            change={onChange}
+            change={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             textcenter="text-center"
+            required={true}
           />
           <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-10" onClick={changePasswordVisibility}>
             {visiblePassword ? (<Eye />) : (<EyeSlash />)}
@@ -145,17 +144,16 @@ export function SignIn() {
             name="confirmaSenha" 
             type={visibilityType} 
             holder="Repita a senha criada acima"
-            change={onChange}
-            padrao={values.confirmaSenha}
+            change={(e: ChangeEvent<HTMLInputElement>) => setPasswordConfirm(e.target.value)}
+            padrao={password}
             textcenter="text-center"
+            required={true}
           />
           <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-10" onClick={changePasswordVisibility}>
             {visiblePassword ? (<Eye />) : (<EyeSlash />)}
           </div>
         </div>
-        <Link to="/adopt/adoption-list" >
-        <Button name="Cadastrar" click={handleSignIn} />
-        </Link>
+        <Button name="Cadastrar" />
       </form>
 
       <div className="absolute top-0 right-0 overflow-hidden h-[220px] w-[170px]">  
