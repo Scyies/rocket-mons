@@ -45,7 +45,7 @@ export function Profile() {
           >
             Nome
           </label>
-          <Input name="nome" type="text" />
+          <Input name="Nome" type="text" />
         </div>
 
         <div className="flex flex-col pb-4 w-full">

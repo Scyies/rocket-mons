@@ -41,7 +41,7 @@ export function Adopt() {
           Olá! Veja os amigos disponíveis para adoção!
         </p>
       </div>
-      <section className="flex flex-col md:flex-row md:gap-4 justify-center min-h-full flex-1 md:mx-20">
+      <section className="flex flex-col flex-wrap md:flex-row md:gap-4 justify-center min-h-full flex-1 md:mx-auto">
         {data.animals.map((cardInfo: QueryTypes) => (
           <Card img={cardInfo.imageUrl}
             name={cardInfo.name}

@@ -13,7 +13,7 @@ interface PropsInfo {
 export function Card(props: PropsInfo) {
 
   return (
-    <div className="bg-gray-300 flex mt-4 max-h-[220px] w-full">
+    <div className="bg-gray-300 flex mt-4 max-h-full w-full md:max-w-[45%]">
       <div className="py-6 pl-6 pr-4">  
         <img src={props.img} alt=""
           className="h-[148px]"

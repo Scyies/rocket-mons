@@ -8,6 +8,7 @@ import { Button } from "../components/Button"
 import { ChangeEvent, FormEvent, useState } from "react"
 import { gql, useMutation } from "@apollo/client"
 import { Link } from "react-router-dom"
+import { Eye, EyeSlash } from "phosphor-react"
 
 // const CREATE_NEW_USER_MUTATION = gql`
 //   mutation CreateUserAccount($name: String!, $email: String!, $senha: String!) {
@@ -33,6 +34,18 @@ export function SignIn() {
     setValues({...values, [e.target.name]: e.target.value});
   }
 
+  const [visiblePassword, setVisiblePassword] = useState(false);
+  const [visibilityType, setVisibilityType] = useState('password');
+
+  function changePasswordVisibility() {
+    setVisiblePassword(true)
+    setVisibilityType('text')
+    if(visiblePassword === true) {
+    setVisiblePassword(false)
+    setVisibilityType('password')
+    } 
+  }
+
   const [createUserProfile, { loading }] = useMutation(CREATE_NEW_USER_MUTATION);
 
   async function submitForm(e: FormEvent) {
@@ -52,23 +65,24 @@ export function SignIn() {
   }
 
   return (
-    <div className='min-h-[100vh] flex flex-col'>
+    <div className='min-h-[100vh] flex flex-col justify-between'>
       <Header />
-      <section>
-        <div className="flex justify-center pb-6">
-          <img src={blueLogo} alt=""
-            className="h-[35px] md:h-[64px] w-[142px]"
-          />
-        </div>
-        <div className="flex flex-col px-6 pb-6">
-          <p className="text-center text-blue-500 mb-2">
-            Ainda não tem cadastro?
-          </p>
-          <p className="text-center text-blue-500">
-            Então, antes de buscar seu melhor amigo, precisamos de alguns dados:
-          </p>
-        </div>
-      </section>
+      <main className="bg-left-img bg-no-repeat bg-left-bottom">
+        <section>
+          <div className="flex justify-center pb-6">
+            <img src={blueLogo} alt=""
+              className="h-[35px] md:h-[64px] w-[142px]"
+            />
+          </div>
+          <div className="flex flex-col px-6 pb-6">
+            <p className="text-center text-blue-500 mb-2">
+              Ainda não tem cadastro?
+            </p>
+            <p className="text-center text-blue-500">
+              Então, antes de buscar seu melhor amigo, precisamos de alguns dados:
+            </p>
+          </div>
+        </section>
       <form onSubmit={submitForm}
         className="px-6 flex flex-col items-center pb-10 mb-auto"
       >
@@ -84,6 +98,7 @@ export function SignIn() {
             type="email" 
             holder="Escolha seu melhor email"
             change={onChange}
+            textcenter="text-center"
           />
         </div>
 
@@ -98,10 +113,11 @@ export function SignIn() {
             type="text" 
             holder="Digite seu nome completo"
             change={onChange}
+            textcenter="text-center"
           />
         </div>
 
-        <div className="flex flex-col text-center pb-4">
+        <div className="flex flex-col text-center pb-4 relative">
           <label htmlFor=""
           className="text-gray-900 pb-1"
           >
@@ -109,13 +125,17 @@ export function SignIn() {
           </label>
           <Input 
             name="senha" 
-            type="password" 
+            type={visibilityType} 
             holder="Crie uma senha"
             change={onChange}
+            textcenter="text-center"
           />
+          <div className="absolute right-3 top-11 text-gray-500 cursor-pointer" onClick={changePasswordVisibility}>
+            {visiblePassword ? (<Eye />) : (<EyeSlash />)}
+          </div>
         </div>
 
-        <div className="flex flex-col text-center pb-4">
+        <div className="flex flex-col text-center pb-4 relative">
           <label htmlFor=""
           className="text-gray-900 pb-1"
           >
@@ -123,11 +143,15 @@ export function SignIn() {
           </label>
           <Input 
             name="confirmaSenha" 
-            type="password" 
+            type={visibilityType} 
             holder="Repita a senha criada acima"
             change={onChange}
             padrao={values.confirmaSenha}
+            textcenter="text-center"
           />
+          <div className="absolute right-3 top-11 text-gray-500 cursor-pointer" onClick={changePasswordVisibility}>
+            {visiblePassword ? (<Eye />) : (<EyeSlash />)}
+          </div>
         </div>
         <Link to="/adopt/adoption-list" >
         <Button name="Cadastrar" click={handleSignIn} />
@@ -140,10 +164,7 @@ export function SignIn() {
           className="translate-x-5"
         />
       </div>
-      <img src={leftImg} 
-        alt=""
-        className="absolute top-2/4 left-0 -z-10 h-[415px]"
-      />
+      </main>
       <Footer />
     </div>
   )
