@@ -19,7 +19,7 @@ export function MessagePage() {
         </h2>
 
         <form action=""
-          className="flex flex-col place-items-center px-4 bg-gray-300 rounded-md py-8 mb-12 w-[95%] md:w-[80%] max-w-[550px] self-center mx-0"
+          className="flex flex-col place-items-center px-4 bg-gray-300 rounded-md py-8 mb-12 w-[95%] md:w-[80%] max-w-[312px] md:max-w-[550px] self-center mx-0"
         >
           <div className="flex flex-col pb-4 w-[90%]">
             <label htmlFor="Nome"
@@ -57,7 +57,7 @@ export function MessagePage() {
             <textarea name="message" id="message" 
               cols={15} rows={5} 
               placeholder="Escreva sua mensagem"
-              className="rounded-md mb-8 pl-4 pt-4 shadow-md min-w-[240px] max-w-[336px] md:max-w-[492px]"
+              className="rounded-md mb-8 pl-4 pt-4 shadow-md min-w-[240px] max-w-[336px] md:max-w-[492px] self-center w-full"
             >
             </textarea>
           </div>
