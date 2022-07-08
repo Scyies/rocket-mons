@@ -1,5 +1,4 @@
 import whiteLogo from '../assets/white-logo.svg';
-import rightImg from '../assets/right-img.svg';
 import catsDogs from '../assets/cats-dogs.svg';
 import { Button } from '../components/Button';
 import { Header } from '../components/Header';
@@ -32,10 +31,10 @@ export function Home() {
             <Button name='Quero me cadastrar' />
           </Link>
         </div>
-        <div className='flex justify-center h-full w-full relative z-0'>
+        <div className='flex justify-center h-full w-full z-0'>
           <img src={catsDogs} 
             alt=""
-            className='h-[248px] md:h-[340px] w-[312px] md:w-[442px] absolute -bottom-[140px] md:-bottom-[150px] lg:-bottom-[420px] z-0'
+            className='h-[248px] md:h-[340px] w-[312px] md:w-[442px] absolute bottom-[10%] md:bottom-[8%] lg:bottom-[8%] z-0'
           />
         </div>
       </main>
