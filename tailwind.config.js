@@ -8,6 +8,13 @@ module.exports = {
       'md': '768px',
       'lg': '1440px'
     },
+    backgroindSize: {
+      'auto': 'auto',
+        'cover': 'cover',
+        'contain': 'contain',
+       '50%': '50%',
+       '16': '4rem',
+    },
     extend: {
       backgroundImage: {
         'right-img': "url('assets/right-img.svg')",

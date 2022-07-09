@@ -8,6 +8,7 @@ import { ChangeEvent, FormEvent, useState } from "react"
 import { gql, useMutation } from "@apollo/client"
 import { Eye, EyeSlash } from "phosphor-react"
 import { useNavigate } from "react-router-dom"
+import { AUTH_USER_TOKEN } from "../constants"
 
 const CREATE_NEW_USER_MUTATION = gql`
   mutation CreateUserAccount($name: String!, $email: String!, $password: String!) {
@@ -15,18 +16,18 @@ const CREATE_NEW_USER_MUTATION = gql`
       id
     }
     publishUserProfile(where: {email: $email}) {
-    id
+      id
     }
   }
 `
-//o problema não ta na mutation
 
 export function SignIn() {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-
+  const [formState, setFormState] = useState({
+    email: '',
+    name: '',
+    password: '',
+    passwordConfirm: ''
+  });
 
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visibilityType, setVisibilityType] = useState('password');
@@ -49,12 +50,12 @@ export function SignIn() {
 
     await createUserProfile({
       variables: {
-        name,
-        email,
-        password
+        name: formState.name,
+        email: formState.email,
+        password: formState.password
       },
       onCompleted: () => {
-        //isso vai ser usado para fazer o token e confirmar que está logado depois
+        localStorage.setItem('authToken', AUTH_USER_TOKEN);
       }
     })
     navigate('/adopt/adoption-list');
@@ -83,7 +84,7 @@ export function SignIn() {
         className="px-6 flex flex-col items-center pb-10 mb-auto"
       >
 
-        <div className="flex flex-col text-center pb-4 w-full">
+        <div className="flex flex-col text-center pb-4 w-full max-w-[336px] md:max-w-[344px]">
           <label htmlFor=""
           className="text-gray-900 pb-1"
           >
@@ -93,13 +94,16 @@ export function SignIn() {
             name="email" 
             type="email" 
             holder="Escolha seu melhor email"
-            change={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+            change={(e: ChangeEvent<HTMLInputElement>) => setFormState({ 
+              ...formState,
+              email: e.target.value
+            })}
             textcenter="text-center"
             required={true}
           />
         </div>
 
-        <div className="flex flex-col text-center pb-4 w-full">
+        <div className="flex flex-col text-center pb-4 w-full max-w-[336px] md:max-w-[344px]">
           <label htmlFor=""
           className="text-gray-900 pb-1"
           >
@@ -109,7 +113,10 @@ export function SignIn() {
             name="name" 
             type="text" 
             holder="Digite seu nome completo"
-            change={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+            change={(e: ChangeEvent<HTMLInputElement>) => setFormState({ 
+              ...formState,
+              name: e.target.value
+            })}
             textcenter="text-center"
             required={true}
           />
@@ -125,11 +132,14 @@ export function SignIn() {
             name="password" 
             type={visibilityType} 
             holder="Crie uma senha"
-            change={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+            change={(e: ChangeEvent<HTMLInputElement>) => setFormState({ 
+              ...formState,
+              password: e.target.value
+            })}
             textcenter="text-center"
             required={true}
           />
-          <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-10" onClick={changePasswordVisibility}>
+          <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-50" onClick={changePasswordVisibility}>
             {visiblePassword ? (<Eye />) : (<EyeSlash />)}
           </div>
         </div>
@@ -144,12 +154,15 @@ export function SignIn() {
             name="confirmaSenha" 
             type={visibilityType} 
             holder="Repita a senha criada acima"
-            change={(e: ChangeEvent<HTMLInputElement>) => setPasswordConfirm(e.target.value)}
-            padrao={password}
+            change={(e: ChangeEvent<HTMLInputElement>) => setFormState({ 
+              ...formState,
+              passwordConfirm: e.target.value
+            })}
+            padrao={formState.password}
             textcenter="text-center"
             required={true}
           />
-          <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-10" onClick={changePasswordVisibility}>
+          <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-50" onClick={changePasswordVisibility}>
             {visiblePassword ? (<Eye />) : (<EyeSlash />)}
           </div>
         </div>

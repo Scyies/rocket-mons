@@ -1,27 +1,24 @@
 import { Header } from "../components/Header"
 import blueLogo from "../assets/blue-logo.svg"
 import pawns from "../assets/pawns.svg"
-import leftImg from "../assets/left-img.svg"
 import { Footer } from "../components/Footer"
 import { Input } from "../components/Inputs"
 import { Button } from "../components/Button"
 import { ChangeEvent, FormEvent, useState } from "react"
-import { gql, useMutation } from "@apollo/client"
-import { Link } from "react-router-dom"
+import { gql, useQuery } from "@apollo/client"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 import { Eye, EyeSlash } from "phosphor-react"
+import { AUTH_USER_TOKEN } from "../constants"
 
-const QUERY_TEST = gql`
-  mutation GetProfiles($email: String!, $password: String!) {
-    usersProfiles(email: $email, password: $password) {
+const LOGIN_QUERY = gql`
+  query LoginQuery($email: String!, $password: String!) {
+    usersProfiles(where: {email: $email, password: $password}) {
       id
+      email
+      name
     }
   }
 `
-
-interface QueryTypes {
-  email: string,
-  password: string
-}
 
 export function LogIn() {
   const [email, setEmail] = useState('');
@@ -39,21 +36,27 @@ export function LogIn() {
     }  
   }
 
-  const [loginProfile, { loading }] = useMutation(QUERY_TEST);
+  const navigate = useNavigate();
 
-  async function handleSubmit(e: FormEvent) {
+  const { loading, error, data } = useQuery(LOGIN_QUERY, {
+    variables: {
+      email: email,
+      password: senha
+    },
+    onCompleted: () => {
+      localStorage.setItem('authToken', AUTH_USER_TOKEN);
+    }
+  });
+
+  function handleSubmit(e: FormEvent) {
     e.preventDefault();
-
-    await loginProfile({
-      variables: {
-        email: email,
-        password: senha
-      },
-      onCompleted: () => {
-        alert('deu boa caraio')
-      }
-    })
-    alert('default')
+    if(data) {
+      localStorage.setItem('authToken', AUTH_USER_TOKEN);
+      alert('login realizado com sucesso');
+      navigate('/adopt/adoption-list');
+    } else {
+      alert('Favor informar o email e senha corretos')
+    }
   };
 
   return (
@@ -74,13 +77,13 @@ export function LogIn() {
         <form onSubmit={handleSubmit}
           className="flex flex-col place-items-center mb-auto pb-44 mt-10"
         >
-          <div className="flex flex-col text-center pb-4 w-full">
+          <div className="flex flex-col text-center pb-4 w-full max-w-[336px] md:max-w-[344px]">
             <label htmlFor=""
             className="text-gray-900 pb-1"
             >
               Email
             </label>
-            <Input name="email" textcenter="text-center" holder="Insira seu email" type="email" change={(event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)} />
+            <Input name="email" textcenter="text-center" holder="Insira seu email" type="email" required={true} change={(event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)} />
           </div>
 
           <div className="flex flex-col text-center pb-4 relative w-full max-w-[336px] md:max-w-[344px]">
@@ -89,9 +92,9 @@ export function LogIn() {
             >
               Senha
             </label>
-            <Input name="senha" textcenter="text-center" holder="Insira sua senha" type={visibilityType} change={(event: ChangeEvent<HTMLInputElement>) => setSenha(event.target.value)} />
+            <Input name="senha" textcenter="text-center" holder="Insira sua senha" type={visibilityType} required={true} change={(event: ChangeEvent<HTMLInputElement>) => setSenha(event.target.value)} />
 
-            <div className="absolute right-3 top-11 text-gray-500 cursor-pointer" onClick={changePasswordVisibility}>
+            <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-50" onClick={changePasswordVisibility}>
               {visiblePassword ? (<Eye />) : (<EyeSlash />)}
             </div>
 
@@ -99,10 +102,7 @@ export function LogIn() {
               Esqueci minha senha
             </span>
           </div>
-
-          <Link to="/adopt/adoption-list" >
-            <Button name="Entrar" />
-          </Link>
+          <Button name="Entrar" />
         </form>
 
         <div className="absolute top-0 right-0 overflow-hidden h-[220px] w-[170px]">  
