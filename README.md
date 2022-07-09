@@ -29,3 +29,11 @@ The project takes place in four weeks of development based on a [Figma model](ht
 - [GraphQL](https://graphql.org/)
 - [GraphCMS](https://graphcms.com/)
 - [ApolloClient](https://www.apollographql.com/docs/react/)
+
+### Goals
+
+- [X] Authentication with graphCMS API
+  - [X] Auto redirect to adoption page if already authenticated
+  - [ ] Display profile data from the API information
+
+- [ ] History of messages sent

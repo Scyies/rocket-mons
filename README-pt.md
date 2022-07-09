@@ -32,3 +32,11 @@ O desafio tem a duração de 4 semanas para ser desenvolvido, com base no modelo
 - [GraphQL](https://graphql.org/)
 - [GraphCMS](https://graphcms.com/)
 - [ApolloClient](https://www.apollographql.com/docs/react/)
+
+### Objetivos
+
+- [X] Autenticação com API do graphCMS
+  - [X] Redirecionamento automático para página de adoção se já autenticado
+  - [ ] Mostrar informações do perfil conforme salvo na API 
+
+- [ ] Histórico das mensagens enviadas
