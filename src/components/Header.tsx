@@ -4,7 +4,6 @@ import defaultProfile from '../assets/prof-icon.svg';
 import { House, EnvelopeSimple } from 'phosphor-react';
 import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
-import { Button } from './Button';
 
 export function Header() {
   let athenticated = false;
@@ -15,6 +14,12 @@ export function Header() {
   function handleLogOut() {
     localStorage.removeItem('authToken');
     navigate('/');
+  }
+
+  let link = '/';
+
+  if(localStorage.getItem('authToken')){
+    link = '/adopt/adoption-list'
   }
 
   return (
@@ -28,7 +33,7 @@ export function Header() {
           className='h-[31px] pr-12 hidden md:inline-flex'
         />
         <div className='pr-14'>
-          <Link to={'/'}>
+          <Link to={link}>
             <House size={30} />
           </Link>
         </div>
