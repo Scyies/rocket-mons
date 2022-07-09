@@ -34,11 +34,11 @@ export function Home() {
         <div className='flex justify-center h-full w-full z-0'>
           <img src={catsDogs} 
             alt=""
-            className='h-[248px] md:h-[340px] w-[312px] md:w-[442px] absolute bottom-[10%] md:bottom-[8%] lg:bottom-[8%] z-0'
+            className='h-[248px] md:h-[340px] w-[312px] md:w-[442px] absolute -bottom-[4%] md:bottom-[8%] lg:bottom-[8%] z-0'
           />
         </div>
       </main>
-        <Footer />
+      <Footer />
     </div>
   )
 }
