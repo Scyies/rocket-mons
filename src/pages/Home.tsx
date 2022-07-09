@@ -10,7 +10,7 @@ export function Home() {
   return(
     <div className='bg-blue-500 min-h-screen w-full flex flex-col'>
       <Header />
-      <main className='bg-right-img bg-no-repeat bg-right bg-contain h-full flex-1'>
+      <main className='bg-right-img bg-no-repeat bg-right bg-contain h-full flex-grow'>
         <div className='flex justify-center'>
             <img src={whiteLogo} alt=""
               className='pb-6 w-[187px] md:w-[251px]'
@@ -31,10 +31,10 @@ export function Home() {
             <Button name='Quero me cadastrar' />
           </Link>
         </div>
-        <div className='flex justify-center h-full w-full z-0'>
+        <div className='flex justify-center z-0 -mb-[5%]'>
           <img src={catsDogs} 
             alt=""
-            className='h-[248px] md:h-[340px] w-[312px] md:w-[442px] absolute -bottom-[4%] md:bottom-[8%] lg:bottom-[8%] z-0'
+            className='h-[248px] md:h-[340px] w-[312px] md:w-[442px] z-0'
           />
         </div>
       </main>
