@@ -15,8 +15,6 @@ export function Header() {
 
   const userId = sessionStorage.getItem('userId');
 
-  console.log(userId);
-
   function handleLogOut() {
     sessionStorage.removeItem('authToken');
     sessionStorage.removeItem('userId');

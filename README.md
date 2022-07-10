@@ -35,5 +35,6 @@ The project takes place in four weeks of development based on a [Figma model](ht
 - [X] Authentication with graphCMS API
   - [X] Auto redirect to adoption page if already authenticated
   - [ ] Display profile data from the API information
+  - [X] Update profile informations
 
 - [ ] History of messages sent

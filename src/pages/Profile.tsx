@@ -3,7 +3,7 @@ import { Header } from "../components/Header";
 import defaultProfile from '../assets/prof-icon.svg';
 import { Input } from "../components/Inputs";
 import { Button } from "../components/Button";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { ChangeEvent, useState } from "react";
 
 const INFO_QUERY = gql`
@@ -13,27 +13,27 @@ const INFO_QUERY = gql`
       bioMessage
       city
       name
-      telnumber
+      telNumber
     }
   }
 `
 
 const UPDATE_INFO_MUTATION = gql`
-  mutation MyMutation($id: ID!, $name: String!, $bioMessage: String, $city: String, $telNumber: Int) {
+  mutation MyMutation($id: ID!, $name: String!, $bioMessage: String, $city: String, $telNumber: String) {
     updateUserProfile(
       where: {id: $id}
-      data: {name: $name, bioMessage: $bioMessage, city: $city, telnumber: $telNumber}
+      data: {name: $name, bioMessage: $bioMessage, city: $city, telNumber: $telNumber}
     ) {
       name
       city
       bioMessage
-      telnumber
+      telNumber
     }
     publishUserProfile(where: {id: $id}) {
       name
       city
       bioMessage
-      telnumber
+      telNumber
     }
   }
 `
@@ -55,13 +55,26 @@ export function Profile() {
   });
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{JSON.stringify(error)}</div>;
-
-  const userInfo = data.userProfile;
   
+  const userInfo = data.userProfile;
+
   console.log(values);
+  
+  const [saveUserInfo] = useMutation(UPDATE_INFO_MUTATION);
 
   function handleSave() {
-    alert('saved data');
+    saveUserInfo({
+      variables: {
+        id: userId,
+        name: values.name,
+        city: values.city,
+        bioMessage: values.bioMessage,
+        telNumber: values.telNumber
+      },
+      onCompleted: () => {
+        alert('Os dados foram salvados com sucesso');
+      }
+    })
   }
 
   return (
@@ -108,7 +121,9 @@ export function Profile() {
             >
               Nome
             </label>
-            <Input name="Nome" type="text" value={userInfo.name} required={true} change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
+            <Input name="Nome" type="text"
+            required={true} 
+            change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               name: e.target.value
             })} />
@@ -120,7 +135,8 @@ export function Profile() {
             >
               Telefone
             </label>
-            <Input name="tel" type="tel" value={userInfo.telnumber || values.telNumber} change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
+            <Input name="tel" type="tel" value={values.telNumber} 
+            change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               telNumber: e.target.value
             })} />
@@ -132,7 +148,8 @@ export function Profile() {
             >
               Cidade
             </label>
-            <Input name="cidade" type="text" value={userInfo.city || values.city} change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
+            <Input name="cidade" type="text" value={values.city} 
+            change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               city: e.target.value
             })} />
@@ -146,9 +163,8 @@ export function Profile() {
             </label>
             <textarea name="message" id="message" 
               cols={15} rows={5} 
-              placeholder="Escreva sua mensagem"
               className="rounded-md mb-8 pl-4 pt-4 shadow-md min-w-[240px] max-w-[336px] md:max-w-[492px] self-center w-full"
-              value={userInfo.bioMessage || values.bioMessage}
+              value={values.bioMessage}
               onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setValues({ 
                 ...values,
                 bioMessage: e.target.value
