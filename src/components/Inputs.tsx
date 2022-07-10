@@ -5,8 +5,8 @@ interface PropsItems{
   name: string,
   type: string,
   holder?: string,
-  value?: string,
-  change?: ChangeEventHandler, //isso vai passar a ser obrigatório depois, lembrar de mudar
+  value?: any,
+  change: ChangeEventHandler, //isso vai passar a ser obrigatório depois, lembrar de mudar
   padrao?: string,
   textcenter?: string,
   required?: boolean

@@ -8,13 +8,13 @@ import { SignIn } from "./pages/SignIn";
 
 export function Router() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/sign-in" element={<SignIn />} />
-      <Route path="/log-in" element={<LogIn />} />
-      <Route path="/adopt/adoption-list" element={<Adopt />} />
-      <Route path="/adopt/adoption-message" element={<MessagePage />} />
-      <Route path="/adopt/profile" element={<Profile />} />
-    </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/log-in" element={<LogIn />} />
+        <Route path="/adopt/adoption-list" element={<Adopt />} />
+        <Route path="/adopt/adoption-message" element={<MessagePage />} />
+        <Route path="/adopt/profile:id" element={<Profile />} />
+      </Routes>
   )
 }

@@ -3,8 +3,62 @@ import { Header } from "../components/Header";
 import defaultProfile from '../assets/prof-icon.svg';
 import { Input } from "../components/Inputs";
 import { Button } from "../components/Button";
+import { gql, useQuery } from "@apollo/client";
+import { ChangeEvent, useState } from "react";
+
+const INFO_QUERY = gql`
+  query GetInfoUser($id: ID!) {
+    userProfile(where: {id: $id}) {
+      avatarUrl
+      bioMessage
+      city
+      name
+      telnumber
+    }
+  }
+`
+
+const UPDATE_INFO_MUTATION = gql`
+  mutation MyMutation($id: ID!, $name: String!, $bioMessage: String, $city: String, $telNumber: Int) {
+    updateUserProfile(
+      where: {id: $id}
+      data: {name: $name, bioMessage: $bioMessage, city: $city, telnumber: $telNumber}
+    ) {
+      name
+      city
+      bioMessage
+      telnumber
+    }
+    publishUserProfile(where: {id: $id}) {
+      name
+      city
+      bioMessage
+      telnumber
+    }
+  }
+`
 
 export function Profile() {
+  const [values, setValues] = useState({
+    name: '',
+    telNumber: '',
+    city: '',
+    bioMessage: ''
+  });
+
+  const userId = sessionStorage.getItem('userId');
+
+  const { loading, error, data } = useQuery(INFO_QUERY, {
+    variables: {
+      id: userId
+    }
+  });
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{JSON.stringify(error)}</div>;
+
+  const userInfo = data.userProfile;
+  
+  console.log(values);
 
   function handleSave() {
     alert('saved data');
@@ -32,9 +86,16 @@ export function Profile() {
               Foto
             </label>
             <div className="flex flex-col place-items-center">
-              <img src={defaultProfile} alt=""
-                className="w-20 mb-1"
+              {userInfo.avatarUrl ? (
+                <img src={userInfo.avatarUrl} alt=""
+                className="w-20 mb-1 rounded-full"
               />
+              ) : (
+                <img src={defaultProfile} alt=""
+                className="w-20 mb-1 rounded-full"
+              />
+              )}
+              
               <span className="text-red-500 text-xs pb-6 hover:underline">
                 Clique na foto para editar
               </span>
@@ -47,7 +108,10 @@ export function Profile() {
             >
               Nome
             </label>
-            <Input name="Nome" type="text" />
+            <Input name="Nome" type="text" value={userInfo.name} required={true} change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
+              ...values,
+              name: e.target.value
+            })} />
           </div>
 
           <div className="flex flex-col pb-4 w-full">
@@ -56,7 +120,10 @@ export function Profile() {
             >
               Telefone
             </label>
-            <Input name="tel" type="tel" />
+            <Input name="tel" type="tel" value={userInfo.telnumber || values.telNumber} change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
+              ...values,
+              telNumber: e.target.value
+            })} />
           </div>
 
           <div className="flex flex-col pb-4 w-full">
@@ -65,7 +132,10 @@ export function Profile() {
             >
               Cidade
             </label>
-            <Input name="cidade" type="text" />
+            <Input name="cidade" type="text" value={userInfo.city || values.city} change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
+              ...values,
+              city: e.target.value
+            })} />
           </div>
 
           <div className="flex flex-col w-full">
@@ -78,6 +148,11 @@ export function Profile() {
               cols={15} rows={5} 
               placeholder="Escreva sua mensagem"
               className="rounded-md mb-8 pl-4 pt-4 shadow-md min-w-[240px] max-w-[336px] md:max-w-[492px] self-center w-full"
+              value={userInfo.bioMessage || values.bioMessage}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setValues({ 
+                ...values,
+                bioMessage: e.target.value
+              })}
             >
             </textarea>
           </div>

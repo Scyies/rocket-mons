@@ -6,7 +6,7 @@ import { Input } from "../components/Inputs"
 import { Button } from "../components/Button"
 import { ChangeEvent, FormEvent, useState } from "react"
 import { gql, useQuery } from "@apollo/client"
-import { Link, Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Eye, EyeSlash } from "phosphor-react"
 import { AUTH_USER_TOKEN } from "../constants"
 
@@ -15,7 +15,6 @@ const LOGIN_QUERY = gql`
     usersProfiles(where: {email: $email, password: $password}) {
       id
       email
-      name
     }
   }
 `
@@ -26,6 +25,15 @@ export function LogIn() {
 
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visibilityType, setVisibilityType] = useState('password');
+  
+  const navigate = useNavigate();
+  
+  const { loading, error, data } = useQuery(LOGIN_QUERY, {
+    variables: {
+      email: email,
+      password: senha
+    }
+  });
 
   function changePasswordVisibility() {
     setVisiblePassword(true)
@@ -36,26 +44,22 @@ export function LogIn() {
     }  
   }
 
-  const navigate = useNavigate();
-
-  const { loading, error, data } = useQuery(LOGIN_QUERY, {
-    variables: {
-      email: email,
-      password: senha
-    },
-    onCompleted: () => {
-      localStorage.setItem('authToken', AUTH_USER_TOKEN);
-    }
-  });
-
+  
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if(data) {
-      localStorage.setItem('authToken', AUTH_USER_TOKEN);
-      alert('login realizado com sucesso');
-      navigate('/adopt/adoption-list');
-    } else {
-      alert('Favor informar o email e senha corretos')
+    const usersProfiles = data.usersProfiles
+
+    try {
+      if(usersProfiles.length > 0) {
+        sessionStorage.setItem('authToken', AUTH_USER_TOKEN);
+        sessionStorage.setItem('userId', usersProfiles[0].id);
+        alert('login realizado com sucesso');
+        navigate('/adopt/adoption-list');
+      } else {
+        alert('Favor informar o email e senha corretos');
+      }
+    } catch (error: any) {
+      alert('Error: ' + error.message);
     }
   };
 

@@ -1,5 +1,4 @@
 import { gql, useQuery } from "@apollo/client";
-import { Key } from "react";
 import { Card } from "../components/Card"
 import { Footer } from "../components/Footer"
 import { Header } from "../components/Header"
@@ -58,6 +57,3 @@ export function Adopt() {
     </div>
   )
 }
-
-
-//flex flex-col flex-wrap md:flex-row md:gap-4 justify-center min-h-full flex-1 md:mx-auto

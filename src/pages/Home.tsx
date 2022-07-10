@@ -4,8 +4,14 @@ import { Button } from '../components/Button';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export function Home() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(localStorage.getItem('authToken')) navigate('/adopt/adoption-list')
+  },[]);
 
   return(
     <div className='bg-blue-500 min-h-screen w-full flex flex-col'>

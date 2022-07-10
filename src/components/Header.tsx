@@ -4,21 +4,29 @@ import defaultProfile from '../assets/prof-icon.svg';
 import { House, EnvelopeSimple } from 'phosphor-react';
 import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
+import { client } from '../lib/apollo';
+
 
 export function Header() {
   let athenticated = false;
-  if(localStorage.getItem('authToken')) athenticated = true;
+  if(sessionStorage.getItem('authToken')) athenticated = true;
 
   const navigate = useNavigate();
 
+  const userId = sessionStorage.getItem('userId');
+
+  console.log(userId);
+
   function handleLogOut() {
-    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('userId');
+    client.resetStore();
     navigate('/');
   }
 
   let link = '/';
 
-  if(localStorage.getItem('authToken')){
+  if(sessionStorage.getItem('authToken')){
     link = '/adopt/adoption-list'
   }
 
@@ -49,7 +57,7 @@ export function Header() {
           </Link>
         </div>
       </div>
-      <div className='flex'>
+      <div className='flex cursor-pointer'>
         <div onClick={handleLogOut}
           className={classNames('text-green-500', {
             'hidden': !athenticated,
@@ -60,7 +68,7 @@ export function Header() {
             LogOut
           </p>
         </div>
-        <Link to="/adopt/profile" className='z-10' >
+        <Link to={`/adopt/profile${userId}`} className='z-10' >
           <img src={defaultProfile} alt=""
             className={classNames('h-10 w-10 mt-11 mr-12', {
               'hidden': !athenticated,
