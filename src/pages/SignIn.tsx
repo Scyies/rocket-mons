@@ -55,7 +55,7 @@ export function SignIn() {
         password: formState.password
       },
       onCompleted: () => {
-        localStorage.setItem('authToken', AUTH_USER_TOKEN);
+        sessionStorage.setItem('authToken', AUTH_USER_TOKEN);
       }
     })
     navigate('/adopt/adoption-list');
