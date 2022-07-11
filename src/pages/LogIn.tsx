@@ -44,7 +44,6 @@ export function LogIn() {
     }  
   }
 
-  
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const usersProfiles = data.usersProfiles

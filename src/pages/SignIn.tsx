@@ -48,17 +48,21 @@ export function SignIn() {
   async function submitForm(e: FormEvent) {
     e.preventDefault();
 
-    await createUserProfile({
-      variables: {
-        name: formState.name,
-        email: formState.email,
-        password: formState.password
-      },
-      onCompleted: ({publishUserProfile}) => {
-        sessionStorage.setItem('authToken', AUTH_USER_TOKEN);
-        sessionStorage.setItem('userId', publishUserProfile.id);
-      }
-    })
+    try {
+      await createUserProfile({
+        variables: {
+          name: formState.name,
+          email: formState.email,
+          password: formState.password
+        },
+        onCompleted: ({publishUserProfile}) => {
+          sessionStorage.setItem('authToken', AUTH_USER_TOKEN);
+          sessionStorage.setItem('userId', publishUserProfile.id);
+        }
+      })
+    } catch (error: any) {
+      alert('Error: ' + error.message);
+    }
     navigate('/adopt/adoption-list');
   }
 

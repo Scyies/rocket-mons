@@ -63,18 +63,22 @@ export function Profile() {
   // console.log(values);
   
   function handleSave() {
-    saveUserInfo({
-      variables: {
-        id: userId,
-        name: values.name,
-        city: values.city,
-        bioMessage: values.bioMessage,
-        telNumber: values.telNumber
-      },
-      onCompleted: () => {
-        alert('Os dados foram salvados com sucesso');
-      }
-    })
+    try {
+      saveUserInfo({
+        variables: {
+          id: userId,
+          name: values.name,
+          city: values.city,
+          bioMessage: values.bioMessage,
+          telNumber: values.telNumber
+        },
+        onCompleted: () => {
+          alert('Os dados foram salvados com sucesso');
+        }
+      })
+    } catch (error: any) {
+      alert('Error: ' + error.message)
+    }
   }
 
   return (
@@ -123,6 +127,7 @@ export function Profile() {
             </label>
             <Input name="Nome" type="text"
             required={true} 
+            value={userInfo.name}
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               name: e.target.value
@@ -135,7 +140,7 @@ export function Profile() {
             >
               Telefone
             </label>
-            <Input name="tel" type="tel" value={values.telNumber} 
+            <Input name="tel" type="tel" value={userInfo.telNumber} 
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               telNumber: e.target.value
@@ -148,7 +153,7 @@ export function Profile() {
             >
               Cidade
             </label>
-            <Input name="cidade" type="text" value={values.city} 
+            <Input name="cidade" type="text" value={userInfo.city} 
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               city: e.target.value
@@ -164,7 +169,7 @@ export function Profile() {
             <textarea name="message" id="message" 
               cols={15} rows={5} 
               className="rounded-md mb-8 pl-4 pt-4 shadow-md min-w-[240px] max-w-[336px] md:max-w-[492px] self-center w-full"
-              value={values.bioMessage}
+              defaultValue={userInfo.bioMessage}
               onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setValues({ 
                 ...values,
                 bioMessage: e.target.value
