@@ -54,8 +54,9 @@ export function SignIn() {
         email: formState.email,
         password: formState.password
       },
-      onCompleted: () => {
+      onCompleted: ({publishUserProfile}) => {
         sessionStorage.setItem('authToken', AUTH_USER_TOKEN);
+        sessionStorage.setItem('userId', publishUserProfile.id);
       }
     })
     navigate('/adopt/adoption-list');
