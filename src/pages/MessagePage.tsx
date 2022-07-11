@@ -1,9 +1,16 @@
+import { ChangeEvent, useState } from "react";
 import { Button } from "../components/Button";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Input } from "../components/Inputs";
 
 export function MessagePage() {
+  const [values, setValues] = useState({
+    name: '',
+    telNumber: '',
+    nameAnimal: '',
+    message: ''
+  })
 
   function handleSubmit() {
     alert('submit')
@@ -27,7 +34,10 @@ export function MessagePage() {
             >
               Nome
             </label>
-            <Input name="Nome" holder="Insira seu nome completo" type="text" />
+            <Input name="Nome" holder="Insira seu nome completo" type="text" change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
+              ...values,
+              name: e.target.value
+            })} />
           </div>
 
           <div className="flex flex-col pb-4 w-[90%]">
@@ -36,7 +46,10 @@ export function MessagePage() {
             >
                 Telefone
             </label>
-            <Input name="Telefone" holder="Insira seu telefone e/ou whatsapp" type="tel" />
+            <Input name="Telefone" holder="Insira seu telefone e/ou whatsapp" type="tel" change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
+              ...values,
+              telNumber: e.target.value
+            })} />
           </div>
 
           <div className="flex flex-col pb-4 w-[90%]">
@@ -45,7 +58,10 @@ export function MessagePage() {
             >
                 Nome do animal
             </label>
-            <Input name="Nome do animal" holder="Por qual animal você se interessou?" type="text" />
+            <Input name="Nome do animal" holder="Por qual animal você se interessou?" type="text" change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
+              ...values,
+              nameAnimal: e.target.value
+            })} />
           </div>
 
           <div className="flex flex-col w-[90%]">
@@ -58,6 +74,10 @@ export function MessagePage() {
               cols={15} rows={5} 
               placeholder="Escreva sua mensagem"
               className="rounded-md mb-8 pl-4 pt-4 shadow-md min-w-[240px] max-w-[336px] md:max-w-[492px] w-full self-center"
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setValues({ 
+                ...values,
+                message: e.target.value
+              })}
             >
             </textarea>
           </div>
