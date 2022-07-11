@@ -45,7 +45,9 @@ export function Profile() {
     city: '',
     bioMessage: ''
   });
-
+  
+  const [saveUserInfo] = useMutation(UPDATE_INFO_MUTATION);
+  
   const userId = sessionStorage.getItem('userId');
 
   const { loading, error, data } = useQuery(INFO_QUERY, {
@@ -58,10 +60,8 @@ export function Profile() {
   
   const userInfo = data.userProfile;
 
-  console.log(values);
+  // console.log(values);
   
-  const [saveUserInfo] = useMutation(UPDATE_INFO_MUTATION);
-
   function handleSave() {
     saveUserInfo({
       variables: {
