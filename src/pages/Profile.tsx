@@ -19,31 +19,34 @@ const INFO_QUERY = gql`
 `
 
 const UPDATE_INFO_MUTATION = gql`
-  mutation MyMutation($id: ID!, $name: String!, $bioMessage: String, $city: String, $telNumber: String) {
-    updateUserProfile(
-      where: {id: $id}
-      data: {name: $name, bioMessage: $bioMessage, city: $city, telNumber: $telNumber}
-    ) {
-      name
-      city
-      bioMessage
-      telNumber
-    }
-    publishUserProfile(where: {id: $id}) {
-      name
-      city
-      bioMessage
-      telNumber
-    }
+mutation MyMutation($id: ID!, $name: String!, $bioMessage: String, $city: String, $telNumber: String, $avatarUrl: String) {
+  updateUserProfile(
+    where: {id: $id}
+    data: {name: $name, bioMessage: $bioMessage, city: $city, telNumber: $telNumber, avatarUrl: $avatarUrl}
+  ) {
+    name
+    city
+    bioMessage
+    telNumber
+    avatarUrl
   }
+  publishUserProfile(where: {id: $id}) {
+    name
+    city
+    bioMessage
+    telNumber
+    avatarUrl
+  }
+}
 `
 
 export function Profile() {
-  const [values, setValues] = useState({
+  const [values, setValues]: any = useState({
     name: '',
     telNumber: '',
     city: '',
-    bioMessage: ''
+    bioMessage: '',
+    avatarUrl: ''
   });
   
   const [saveUserInfo] = useMutation(UPDATE_INFO_MUTATION);
@@ -60,9 +63,34 @@ export function Profile() {
   
   const userInfo = data.userProfile;
 
-  // console.log(values);
+  async function imgInpuChange(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files![0];
+
+      const base64 = await convertBase64(file);
+      setValues({
+        ...values,
+        avatarUrl: base64
+      })
+  };
+
+  function convertBase64(file: Blob) {
+
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      }
+    })
+  }
   
   function handleSave() {
+
     try {
       saveUserInfo({
         variables: {
@@ -70,16 +98,18 @@ export function Profile() {
           name: values.name,
           city: values.city,
           bioMessage: values.bioMessage,
-          telNumber: values.telNumber
+          telNumber: values.telNumber,
+          avatarUrl: values.avatarUrl
         },
         onCompleted: () => {
           alert('Os dados foram salvados com sucesso');
+          window.location.reload();
         }
       })
     } catch (error: any) {
       alert('Error: ' + error.message)
     }
-  }
+  }  
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -102,16 +132,20 @@ export function Profile() {
             >
               Foto
             </label>
-            <div className="flex flex-col place-items-center">
+            <div className="flex flex-col place-items-center relative">
               {userInfo.avatarUrl ? (
                 <img src={userInfo.avatarUrl} alt=""
-                className="w-20 mb-1 rounded-full"
+                className="w-20 mb-1 rounded-full object-cover max-h-[80px] max-w-[80px]"
               />
               ) : (
                 <img src={defaultProfile} alt=""
-                className="w-20 mb-1 rounded-full"
+                className="w-20 mb-1 rounded-full object-cover max-h-[80px] max-w-[80px]"
               />
               )}
+              <input type="file" accept="img/*" 
+                onChange={imgInpuChange}
+                className="opacity-0 absolute h-[80px] w-[80px]"
+              />
               
               <span className="text-red-500 text-xs pb-6 hover:underline">
                 Clique na foto para editar
@@ -129,7 +163,7 @@ export function Profile() {
             required={true} 
             value={userInfo.name}
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
-              ...values,
+              ...userInfo,
               name: e.target.value
             })} />
           </div>
