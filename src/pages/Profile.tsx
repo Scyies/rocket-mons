@@ -4,7 +4,8 @@ import defaultProfile from '../assets/prof-icon.svg';
 import { Input } from "../components/Inputs";
 import { Button } from "../components/Button";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { convertBase64 } from "../utils/convertBase64";
 
 const INFO_QUERY = gql`
   query GetInfoUser($id: ID!) {
@@ -48,7 +49,7 @@ export function Profile() {
     bioMessage: '',
     avatarUrl: ''
   });
-  
+
   const [saveUserInfo] = useMutation(UPDATE_INFO_MUTATION);
   
   const userId = sessionStorage.getItem('userId');
@@ -72,27 +73,20 @@ export function Profile() {
         avatarUrl: base64
       })
   };
-
-  function convertBase64(file: Blob) {
-
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      }
-    })
-  }
   
-  function handleSave() {
+  console.log(values);
+
+  async function handleSave(e: FormEvent) {
+    e.preventDefault();
+
+    if (values.name === undefined || values.name === null || values.name === '') {setValues({...values, name: userInfo.name});};
+    if (values.telNumber === undefined || values.telNumber === null || values.telNumber === '') {setValues({...values, telNumber: userInfo.telNumber});};
+    if (values.city === undefined || values.city === null || values.city === '') {setValues({...values, city: userInfo.city});};
+    if (values.bioMessage === undefined || values.bioMessage === null || values.bioMessage === '') {setValues({...values, bioMessage: userInfo.bioMessage});};
+    if (values.avatarUrl === undefined || values.avatarUrl === null || values.avatarUrl === '') {setValues({...values, avatarUrl: userInfo.avatarUrl});};    
 
     try {
-      saveUserInfo({
+      await saveUserInfo({
         variables: {
           id: userId,
           name: values.name,
@@ -109,6 +103,7 @@ export function Profile() {
     } catch (error: any) {
       alert('Error: ' + error.message)
     }
+    
   }  
 
   return (
@@ -121,7 +116,7 @@ export function Profile() {
           Esse é o perfil que aparece para responsáveis ou ONGs que recebem sua mensagem.
         </h2>
 
-        <section className="bg-gray-300 flex flex-col mx-6 mb-4 rounded-md px-4 py-8 place-items-center w-[95%] md:w-[80%] max-w-[312px] md:max-w-[550px] self-center">
+        <form onSubmit={handleSave} className="bg-gray-300 flex flex-col mx-6 mb-4 rounded-md px-4 py-8 place-items-center w-[95%] md:w-[80%] max-w-[312px] md:max-w-[550px] self-center">
           <h2 className="text-gray-900 font-semibold text-center mb-4">
             Perfil
           </h2>
@@ -163,7 +158,7 @@ export function Profile() {
             required={true} 
             value={userInfo.name}
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
-              ...userInfo,
+              ...values,
               name: e.target.value
             })} />
           </div>
@@ -213,7 +208,7 @@ export function Profile() {
           </div>
 
           <Button name="Salvar" click={handleSave} />
-        </section>
+        </form>
       </main>
 
       <Footer />
