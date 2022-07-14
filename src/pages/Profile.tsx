@@ -73,18 +73,10 @@ export function Profile() {
         avatarUrl: base64
       })
   };
-  
-  console.log(values);
 
   async function handleSave(e: FormEvent) {
     e.preventDefault();
-
-    if (values.name === undefined || values.name === null || values.name === '') {setValues({...values, name: userInfo.name});};
-    if (values.telNumber === undefined || values.telNumber === null || values.telNumber === '') {setValues({...values, telNumber: userInfo.telNumber});};
-    if (values.city === undefined || values.city === null || values.city === '') {setValues({...values, city: userInfo.city});};
-    if (values.bioMessage === undefined || values.bioMessage === null || values.bioMessage === '') {setValues({...values, bioMessage: userInfo.bioMessage});};
-    if (values.avatarUrl === undefined || values.avatarUrl === null || values.avatarUrl === '') {setValues({...values, avatarUrl: userInfo.avatarUrl});};    
-
+    
     try {
       await saveUserInfo({
         variables: {
@@ -103,7 +95,6 @@ export function Profile() {
     } catch (error: any) {
       alert('Error: ' + error.message)
     }
-    
   }  
 
   return (
@@ -157,6 +148,7 @@ export function Profile() {
             <Input name="Nome" type="text"
             required={true} 
             value={userInfo.name}
+            id='name-input'
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               name: e.target.value

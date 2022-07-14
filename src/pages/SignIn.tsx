@@ -55,7 +55,7 @@ export function SignIn() {
           email: formState.email,
           password: formState.password
         },
-        onCompleted: ({publishUserProfile}) => {
+        onCompleted: ({publishUserProfile}: any) => {
           sessionStorage.setItem('authToken', AUTH_USER_TOKEN);
           sessionStorage.setItem('userId', publishUserProfile.id);
         }
@@ -63,6 +63,7 @@ export function SignIn() {
     } catch (error: any) {
       alert('Error: ' + error.message);
     }
+    alert('Seu cadastro foi realizado com sucesso!');
     navigate('/adopt/adoption-list');
   }
 

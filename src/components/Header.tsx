@@ -6,14 +6,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { client } from '../lib/apollo';
 
-
 export function Header() {
+  const userId = sessionStorage.getItem('userId');
+
   let athenticated = false;
   if(sessionStorage.getItem('authToken')) athenticated = true;
 
   const navigate = useNavigate();
-
-  const userId = sessionStorage.getItem('userId');
 
   function handleLogOut() {
     sessionStorage.removeItem('authToken');

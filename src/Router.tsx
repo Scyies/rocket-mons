@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { httpLink } from "./lib/apollo";
 import { Adopt } from "./pages/Adopt";
 import { Home } from './pages/Home'
 import { LogIn } from "./pages/LogIn";
@@ -9,10 +10,10 @@ import { SignIn } from "./pages/SignIn";
 export function Router() {
   return (
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path={`/`} element={<Home />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/log-in" element={<LogIn />} />
-        <Route path="/adopt/adoption-list" element={<Adopt />} />
+        <Route path={`/adopt/adoption-list`} element={<Adopt />} />
         <Route path="/adopt/adoption-message" element={<MessagePage />} />
         <Route path="/adopt/profile:id" element={<Profile />} />
       </Routes>

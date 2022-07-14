@@ -16,8 +16,8 @@ O desafio tem a duração de 4 semanas para ser desenvolvido, com base no modelo
 
 - [X] Primeira semana
   - [X] Desenvolver as páginas como mobile first
-- [ ] Segunda semana
-  - [ ] Carregando...
+- [X] Segunda semana
+  - [X] Adatar as páginas feitas para serem responsivas
 - [ ] Terceira semana
   - [ ] Carregando...
 - [ ] Quarta semana
