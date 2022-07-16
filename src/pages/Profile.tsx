@@ -4,7 +4,7 @@ import defaultProfile from '../assets/prof-icon.svg';
 import { Input } from "../components/Inputs";
 import { Button } from "../components/Button";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { convertBase64 } from "../utils/convertBase64";
 
 const INFO_QUERY = gql`
@@ -49,18 +49,17 @@ export function Profile() {
     bioMessage: '',
     avatarUrl: ''
   });
-
+  
   const [saveUserInfo] = useMutation(UPDATE_INFO_MUTATION);
   
   const userId = sessionStorage.getItem('userId');
 
-  const { loading, error, data } = useQuery(INFO_QUERY, {
+  const { loading, data } = useQuery(INFO_QUERY, {
     variables: {
       id: userId
     }
   });
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>{JSON.stringify(error)}</div>;
   
   const userInfo = data.userProfile;
 
@@ -76,7 +75,9 @@ export function Profile() {
 
   async function handleSave(e: FormEvent) {
     e.preventDefault();
-    
+
+    console.log(values);
+        
     try {
       await saveUserInfo({
         variables: {
@@ -95,7 +96,9 @@ export function Profile() {
     } catch (error: any) {
       alert('Error: ' + error.message)
     }
-  }  
+  };
+
+  console.log(values);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -152,7 +155,8 @@ export function Profile() {
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               name: e.target.value
-            })} />
+            })} 
+            />
           </div>
 
           <div className="flex flex-col pb-4 w-full">

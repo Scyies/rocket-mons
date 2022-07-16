@@ -21,10 +21,13 @@ export const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache({
     typePolicies: {
-        userProfile:{
-          merge: true,
-          keyFields: ["userProfile"],
-        },
-    },
+        Query: {
+          fields: {
+            userProfile:{
+              merge: true,
+            },
+          }
+        }
+      },
   })
 })

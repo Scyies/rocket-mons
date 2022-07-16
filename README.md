@@ -32,7 +32,7 @@ The project takes place in four weeks of development based on a [Figma model](ht
 
 ### Goals
 
-- [X] Authentication with graphCMS API
+- [X] Authentication with graphCMS API and ApolloClient
   - [X] Auto redirect to adoption page if already authenticated
   - [X] Display profile data from the API information
   - [X] Update profile informations

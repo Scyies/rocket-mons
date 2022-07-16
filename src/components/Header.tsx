@@ -31,11 +31,11 @@ export function Header() {
     <header className="flex justify-between mb-[10%] lg:mb-[5%] z-10">
       <img src={topImg} 
         alt=""
-        className='top-0 left-0 absolute w-[295px] md:w-[470px]'
+        className='top-0 left-0 absolute w-[295px] md:w-[470px] pointer-events-none'
       />
       <div className="relative flex pl-12 pt-12 text-white">
         <img src={whiteLogo} alt=""
-          className='h-[31px] pr-12 hidden md:inline-flex'
+          className='h-[31px] pr-12 hidden md:inline-flex pointer-events-none'
         />
         <div className='pr-14'>
           <Link to={link}>
