@@ -58,13 +58,13 @@ export function SignIn() {
         onCompleted: ({publishUserProfile}: any) => {
           sessionStorage.setItem('authToken', AUTH_USER_TOKEN);
           sessionStorage.setItem('userId', publishUserProfile.id);
+          alert('Seu cadastro foi realizado com sucesso!');
+          navigate('/adopt/adoption-list');
         }
       })
     } catch (error: any) {
       alert('Error: ' + error.message);
     }
-    alert('Seu cadastro foi realizado com sucesso!');
-    navigate('/adopt/adoption-list');
   }
 
   return (
