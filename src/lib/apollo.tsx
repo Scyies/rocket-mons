@@ -18,7 +18,8 @@ const authLink = setContext((_, { headers }) => {
 );
 
 export const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  // link: authLink.concat(httpLink),
+  uri: import.meta.env.VITE_API_URL,
   cache: new InMemoryCache({
     typePolicies: {
         Query: {
