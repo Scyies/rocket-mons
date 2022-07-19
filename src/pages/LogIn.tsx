@@ -9,7 +9,6 @@ import { gql, useQuery } from "@apollo/client"
 import { useNavigate } from "react-router-dom"
 import { Eye, EyeSlash } from "phosphor-react"
 import { AUTH_USER_TOKEN } from "../constants"
-import { Loading } from "./Loading"
 
 const LOGIN_QUERY = gql`
   query LoginQuery($email: String!, $password: String!) {

@@ -77,7 +77,10 @@ export function Profile() {
   async function handleSave(e: FormEvent) {
     e.preventDefault();
 
-    console.log(values);
+    // if(values.name === '' || values.telNumber === '' || values.city === '' || values.bioMessage === '') {
+    //   alert('Por favor preencha todos os campos');
+    // }
+    // console.log(values);
         
     try {
       await saveUserInfo({
