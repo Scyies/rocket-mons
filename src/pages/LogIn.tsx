@@ -29,13 +29,12 @@ export function LogIn() {
   
   const navigate = useNavigate();
   
-  const { loading, error, data } = useQuery(LOGIN_QUERY, {
+  const { data } = useQuery(LOGIN_QUERY, {
     variables: {
       email: email,
       password: senha
     }
   });
-  if (loading) return <Loading />;
 
   function changePasswordVisibility() {
     setVisiblePassword(true)
