@@ -30,7 +30,8 @@ interface QueryTypes {
 
 export function Adopt() {
   const { loading, error, data } = useQuery(GET_ANIMAL_INFO);
-  // if (loading) return <Loading />;
+  if (loading) return <Loading />;
+  if(error) return (<>Error: {error}</>);
   
   return (
     <div className="min-h-screen flex flex-col justify-between">
