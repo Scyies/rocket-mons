@@ -9,6 +9,7 @@ import { gql, useMutation } from "@apollo/client"
 import { Eye, EyeSlash } from "phosphor-react"
 import { useNavigate } from "react-router-dom"
 import { AUTH_USER_TOKEN } from "../constants"
+import { Loading } from "./Loading"
 
 const CREATE_NEW_USER_MUTATION = gql`
   mutation CreateUserAccount($name: String!, $email: String!, $password: String!) {
@@ -44,6 +45,7 @@ export function SignIn() {
   const navigate = useNavigate();
 
   const [createUserProfile, { loading }] = useMutation(CREATE_NEW_USER_MUTATION);
+  if (loading) return <Loading />;
 
   async function submitForm(e: FormEvent) {
     e.preventDefault();

@@ -9,6 +9,7 @@ import { gql, useQuery } from "@apollo/client"
 import { useNavigate } from "react-router-dom"
 import { Eye, EyeSlash } from "phosphor-react"
 import { AUTH_USER_TOKEN } from "../constants"
+import { Loading } from "./Loading"
 
 const LOGIN_QUERY = gql`
   query LoginQuery($email: String!, $password: String!) {
@@ -34,6 +35,7 @@ export function LogIn() {
       password: senha
     }
   });
+  if (loading) return <Loading />;
 
   function changePasswordVisibility() {
     setVisiblePassword(true)
@@ -59,6 +61,8 @@ export function LogIn() {
       }
     } catch (error: any) {
       alert('Error: ' + error.message);
+      console.log(error);
+      
     }
   };
 

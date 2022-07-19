@@ -6,6 +6,7 @@ import { Button } from "../components/Button";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { convertBase64 } from "../utils/convertBase64";
+import { Loading } from "./Loading";
 
 const INFO_QUERY = gql`
   query GetInfoUser($id: ID!) {
@@ -59,7 +60,7 @@ export function Profile() {
       id: userId
     }
   });
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading />;
   
   const userInfo = data.userProfile;
 

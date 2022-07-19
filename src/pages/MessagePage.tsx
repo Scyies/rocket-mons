@@ -4,6 +4,7 @@ import { Button } from "../components/Button";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Input } from "../components/Inputs";
+import { Loading } from "./Loading";
 
 const ANIMALS_QUERY = gql`
 query AnimalsQuery ($id: ID!) {
@@ -45,7 +46,7 @@ export function MessagePage() {
       id: userId
     }
   });
-  if(loading) return (<>Loading...</>);
+  if (loading) return <Loading />;
 
   const animalNamesInput: HTMLSelectElement = document.querySelector('#test')!;
     

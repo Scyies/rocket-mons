@@ -2,6 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import { Card } from "../components/Card"
 import { Footer } from "../components/Footer"
 import { Header } from "../components/Header"
+import { Loading } from "./Loading";
 
 const GET_ANIMAL_INFO = gql`
   query GetAnimals {
@@ -29,8 +30,7 @@ interface QueryTypes {
 
 export function Adopt() {
   const { loading, error, data } = useQuery(GET_ANIMAL_INFO);
-  if(loading) return (<>Loading...</>);
-  if(error) return (<>Error: {error}</>);
+  if (loading) return <Loading />;
   
   return (
     <div className="min-h-screen flex flex-col justify-between">

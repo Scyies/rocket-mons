@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import { httpLink } from "./lib/apollo";
 import { Adopt } from "./pages/Adopt";
 import { Home } from './pages/Home'
 import { LogIn } from "./pages/LogIn";
