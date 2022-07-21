@@ -9,6 +9,10 @@
 This is a project based on the *Alura's fourth Front-end Challenge*. It's goal is to provide a real work experience for developers studing in the plataform.
 The project takes place in four weeks of development based on a [Figma model](https://www.figma.com/file/TlfkDoIu8uyjZNla1T8TpH/Challenge---Adopet).
 
+### Usage
+
+If you experience some errors while trying do create a new account and want to see the whole application, feel free to use this login: email: admin@admin.sim password: Admin1234
+
 ### Challenges
 
 - [X] First week

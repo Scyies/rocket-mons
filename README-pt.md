@@ -12,6 +12,10 @@ The project takes place in four weeks of development based on a [Figma model](ht
 Este projeto está sendo desenvolvido durante o quarto *Desafio Front-end da Alura*. Seu objetivo é expor os desenvolvedores estudando na plataforma a uma experência real de trabalho.
 O desafio tem a duração de 4 semanas para ser desenvolvido, com base no modelo do [Figma](https://www.figma.com/file/TlfkDoIu8uyjZNla1T8TpH/Challenge---Adopet).
 
+### Utilização
+
+Se tiver alguns erro durante a criação de uma nova conta e quiser ver a aplicação como um todo, utilize esse login: email: admin@admin.sim senha: Admin1234
+
 ### Desafios
 
 - [X] Primeira semana
