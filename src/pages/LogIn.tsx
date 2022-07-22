@@ -8,7 +8,9 @@ import { ChangeEvent, FormEvent, useState } from "react"
 import { gql, useQuery } from "@apollo/client"
 import { useNavigate } from "react-router-dom"
 import { Eye, EyeSlash } from "phosphor-react"
-import { AUTH_USER_TOKEN } from "../constants"
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { app } from "../firebase/Firebase"
+import { useUserAuth } from "../firebase/UserAuthContext"
 
 const LOGIN_QUERY = gql`
   query LoginQuery($email: String!, $password: String!) {
@@ -25,6 +27,14 @@ export function LogIn() {
 
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visibilityType, setVisibilityType] = useState('password');
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [error, setError] = useState('');
+
+  const { logIn } = useUserAuth();
+
+  app
   
   const navigate = useNavigate();
   
@@ -44,23 +54,21 @@ export function LogIn() {
     }  
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const usersProfiles = data.usersProfiles
+
+    setError('');
+    setIsLoading(true);
 
     try {
-      if(usersProfiles.length > 0) {
-        sessionStorage.setItem('authToken', AUTH_USER_TOKEN);
-        sessionStorage.setItem('userId', usersProfiles[0].id);
-        alert('login realizado com sucesso');
-        navigate('/adopt/adoption-list');
-      } else {
-        alert('Favor informar o email e senha corretos');
-      }
-    } catch (error: any) {
-      alert('Error: ' + error.message);
-      console.log(error);
-      
+      await logIn(email, senha);
+      setIsLoading(false);
+      alert('Seu login foi realizado com sucesso!');
+      navigate('/adopt/adoption-list');      
+    } catch (erro: any) {
+      setIsLoading(false);
+      setError(erro.message);
+      alert(error);
     }
   };
 
@@ -107,7 +115,7 @@ export function LogIn() {
               Esqueci minha senha
             </span>
           </div>
-          <Button name="Entrar" />
+          <Button name="Entrar" loading={isLoading} />
         </form>
 
         <div className="absolute top-0 right-0 overflow-hidden h-[220px] w-[170px]">  

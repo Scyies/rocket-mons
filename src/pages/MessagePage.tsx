@@ -1,10 +1,15 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { ChangeEvent, ChangeEventHandler, FormEvent, useState } from "react";
+import { gql } from "@apollo/client";
+import { getDocs, collection } from "firebase/firestore";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button } from "../components/Button";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Input } from "../components/Inputs";
-import { Loading } from "./Loading";
+import { Loading } from "../components/Loading";
+import { createNewMessage } from "../firebase/CreateNewMessage";
+import { db } from "../firebase/Firebase";
+import { useUserAuth } from "../firebase/UserAuthContext";
+import { userProfileCreation } from "../firebase/UserProfileCreation";
 
 const ANIMALS_QUERY = gql`
 query AnimalsQuery ($id: ID!) {
@@ -35,45 +40,51 @@ export function MessagePage() {
     telNumber: '',
     adoptionMessage: '',
     selectAnimal: ''
-  })
-  
-  const [createNewMessage] = useMutation(CREATE_NEW_MESSAGE_MUTATION);
-
-  const userId = sessionStorage.getItem('userId');
-
-  const { loading, data } = useQuery(ANIMALS_QUERY, {
-    variables: {
-      id: userId
-    }
   });
-  if (loading) return <Loading />;
+  const [animalsList, setAnimalsList]: any = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const { user } = useUserAuth();
 
-  const animalNamesInput: HTMLSelectElement = document.querySelector('#test')!;
+  async function getAnimalsInfo() {
+    const animals: any = []
+    setIsLoading(true);
+
+    try {
+      const docs = await getDocs(collection(db, 'animals')).then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          animals.push({... doc.data(), id: doc.id})
+        });
+        setAnimalsList([... animals]);
+        setIsLoading(false);
+      })  
+    } catch (error: any) {
+      setIsLoading(false);
+      console.log(error.message);      
+    }
+  }
     
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    setIsLoading(true);
 
-    let selectedIndex = animalNamesInput?.options.selectedIndex - 1;
+    await createNewMessage(
+      values.name,
+      values.telNumber,
+      values.selectAnimal,
+      values.adoptionMessage,
+      user.email
+    );
 
-    try {
-      await createNewMessage({
-        variables: {
-          name: values.name,
-          telNumber: values.telNumber,
-          adoptionMessage: values.adoptionMessage,
-          animalNames: values.selectAnimal,
-          animalId: data.animals[selectedIndex].id,
-          userId: userId
-        },
-        onCompleted: () => {
-          alert('Sua mensagem foi enviada com sucesso');
-        }
-      })
-    } catch (error: any) {
-      alert('Error: ' + error.message);
-    }
-    console.log(values);
+    setIsLoading(false);
+    alert('Sua mensagem foi enviada com sucesso!');
   }
+
+  console.log(values);
+
+  useEffect(() => {
+    getAnimalsInfo()
+  },[]);
 
   return (
     <div className="min-h-screen">
@@ -134,7 +145,7 @@ export function MessagePage() {
             })}
             >
               <option value="">Qual desse animais você escolheu?</option>
-              {data.animals.map((animal: any, index: any) => (
+              {animalsList.map((animal: any, index: any) => (
                   <option key={index} value={animal.name}>{animal.name}</option>
               ))}
             </select>
@@ -159,7 +170,7 @@ export function MessagePage() {
             </textarea>
           </div>
 
-          <Button name="Enviar" />
+          <Button name="Enviar" loading={isLoading} />
         </form>
       </main>
 

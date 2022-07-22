@@ -5,11 +5,11 @@ import { Footer } from "../components/Footer"
 import { Input } from "../components/Inputs"
 import { Button } from "../components/Button"
 import { ChangeEvent, FormEvent, useState } from "react"
-import { gql, useMutation } from "@apollo/client"
+import { gql } from "@apollo/client"
 import { Eye, EyeSlash } from "phosphor-react"
 import { useNavigate } from "react-router-dom"
-import { AUTH_USER_TOKEN } from "../constants"
-import { Loading } from "./Loading"
+import { useUserAuth } from "../firebase/UserAuthContext"
+import { userProfileCreation } from "../firebase/UserProfileCreation"
 
 const CREATE_NEW_USER_MUTATION = gql`
   mutation CreateUserAccount($name: String!, $email: String!, $password: String!) {
@@ -33,6 +33,12 @@ export function SignIn() {
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visibilityType, setVisibilityType] = useState('password');
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [error, setError] = useState('');
+
+  const { signUp } =  useUserAuth();
+
   function changePasswordVisibility() {
     setVisiblePassword(true)
     setVisibilityType('text')
@@ -44,28 +50,22 @@ export function SignIn() {
 
   const navigate = useNavigate();
 
-  const [createUserProfile, { loading }] = useMutation(CREATE_NEW_USER_MUTATION);
-  if (loading) return <Loading />;
-
   async function submitForm(e: FormEvent) {
     e.preventDefault();
+    setError('');
+    setIsLoading(true);
 
     try {
-      await createUserProfile({
-        variables: {
-          name: formState.name,
-          email: formState.email,
-          password: formState.password
-        },
-        onCompleted: ({publishUserProfile}: any) => {
-          sessionStorage.setItem('authToken', AUTH_USER_TOKEN);
-          sessionStorage.setItem('userId', publishUserProfile.id);
-          alert('Seu cadastro foi realizado com sucesso!');
-          navigate('/adopt/adoption-list');
-        }
-      })
-    } catch (error: any) {
-      alert('Error: ' + error.message);
+      await signUp(formState.email, formState.password).then(() => {
+        userProfileCreation(formState.name, formState.email);
+      });
+      setIsLoading(false);
+      alert('Seu cadastro foi realizado com sucesso!');
+      navigate('/adopt/adoption-list');      
+    } catch (erro: any) {
+      setIsLoading(false);
+      setError(erro.message);
+      alert(error);
     }
   }
 
@@ -174,7 +174,7 @@ export function SignIn() {
             {visiblePassword ? (<Eye />) : (<EyeSlash />)}
           </div>
         </div>
-        <Button name="Cadastrar" />
+        <Button name="Cadastrar" loading={isLoading} />
       </form>
 
       <div className="absolute top-0 right-0 overflow-hidden h-[220px] w-[170px]">  

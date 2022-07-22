@@ -1,8 +1,11 @@
-import { gql, useQuery } from "@apollo/client";
-import { Card } from "../components/Card"
-import { Footer } from "../components/Footer"
-import { Header } from "../components/Header"
-import { Loading } from "./Loading";
+import { gql } from "@apollo/client";
+import { Card } from "../components/Card";
+import { Footer } from "../components/Footer";
+import { Header } from "../components/Header";
+import { Loading } from "../components/Loading";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/Firebase";
+import { useEffect, useState } from "react";
 
 const GET_ANIMAL_INFO = gql`
   query GetAnimals {
@@ -19,7 +22,7 @@ const GET_ANIMAL_INFO = gql`
 `
 
 interface QueryTypes {
-  imageUrl: string; 
+  imageURL: string; 
   name: string; 
   age: string; 
   size: string; 
@@ -29,9 +32,30 @@ interface QueryTypes {
 }
 
 export function Adopt() {
-  const { loading, error, data } = useQuery(GET_ANIMAL_INFO);
-  if (loading) return <Loading />;
-  if(error) return (<>Error: {error}</>);
+  const [animalsList, setAnimalsList]: any = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function getAnimalsInfo() {
+    const animals: any = []
+    setIsLoading(true);
+
+    try {
+      const docs = await getDocs(collection(db, 'animals')).then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          animals.push({... doc.data(), id: doc.id})
+        });
+        setAnimalsList([... animals]);
+        setIsLoading(false);
+      })  
+    } catch (error: any) {
+      setIsLoading(false);
+      console.log(error.message);      
+    }
+  }
+
+  useEffect(() => {
+    getAnimalsInfo()
+  },[]);
   
   return (
     <div className="min-h-screen flex flex-col justify-between">
@@ -41,19 +65,19 @@ export function Adopt() {
           Olá! Veja os amigos disponíveis para adoção!
         </p>
       </div>
-      <section className="grid grid-rows-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 md:mx-8 lg:mx-[10%]">
-        {data.animals.map((cardInfo: QueryTypes) => (
-          <Card img={cardInfo.imageUrl}
-            name={cardInfo.name}
-            age={cardInfo.age}
-            size={cardInfo.size}
-            behavior={cardInfo.behavior}
-            location={cardInfo.location}
-            key={cardInfo.id}
-          />
-          )
+      { isLoading ? <Loading /> :
+        <section className="grid grid-rows-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 md:mx-8 lg:mx-[10%]">
+        {animalsList.map((doc: QueryTypes) => (
+          <Card img={doc.imageURL}
+            name={doc.name}
+            age={doc.age}
+            size={doc.size}
+            behavior={doc.behavior}
+            location={doc.location}
+            key={doc.id}
+          />)
         )}
-      </section>
+      </section>}
       <Footer />
     </div>
   )

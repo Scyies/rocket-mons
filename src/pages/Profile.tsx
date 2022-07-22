@@ -4,9 +4,13 @@ import defaultProfile from '../assets/prof-icon.svg';
 import { Input } from "../components/Inputs";
 import { Button } from "../components/Button";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { convertBase64 } from "../utils/convertBase64";
-import { Loading } from "./Loading";
+import { Loading } from "../components/Loading";
+import { useUserAuth } from "../firebase/UserAuthContext";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../firebase/Firebase";
+import { userProfileUpdate } from "../firebase/UserProfileUpdate";
 
 const INFO_QUERY = gql`
   query GetInfoUser($id: ID!) {
@@ -48,73 +52,91 @@ export function Profile() {
     telNumber: '',
     city: '',
     bioMessage: '',
-    avatarUrl: ''
+    avatarURL: ''
   });
-  
-  const [saveUserInfo] = useMutation(UPDATE_INFO_MUTATION);
-  
-  const userId = sessionStorage.getItem('userId');
 
-  const { loading, data } = useQuery(INFO_QUERY, {
-    variables: {
-      id: userId
-    }
-  });
-  if (loading) return <Loading />;
+  const [isLoading, setIsLoading] = useState(false)
   
-  const userInfo = data.userProfile;
-
+  const { user } = useUserAuth();  
+  
   async function imgInpuChange(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files![0];
 
       const base64 = await convertBase64(file);
       setValues({
         ...values,
-        avatarUrl: base64
+        avatarURL: base64
       })
   };
+  
+  async function getUserInfo() {
+    setIsLoading(true);
+    const userInfo: any = [];    
 
+    const q = query(collection (db, 'userProfile'), where('email', '==', user.email));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      userInfo.push({... doc.data(), id: doc.id})
+    });
+    setValues(
+      {
+        name: userInfo[0].name,
+        telNumber: userInfo[0].telNumber,
+        city: userInfo[0].city,
+        bioMessage: userInfo[0].bioMessage,
+        avatarURL: userInfo[0].avatarURL
+      }
+    )
+    setIsLoading(false);
+  }
+  
   async function handleSave(e: FormEvent) {
+    setIsLoading(true);
     e.preventDefault();
+    
+    if(values.name === undefined) {
+      return alert('Por favor informe seu nome');
+    }
+    if(values.telNumber === undefined) {
+      return alert('Por favor informe seu telefone');
+    }
+    if(values.city === undefined) {
+      return alert('Por favor informe sua cidade');
+    }
 
-    // if(values.name === '' || values.telNumber === '' || values.city === '' || values.bioMessage === '') {
-    //   alert('Por favor preencha todos os campos');
-    // }
-    // console.log(values);
-        
     try {
-      await saveUserInfo({
-        variables: {
-          id: userId,
-          name: values.name,
-          city: values.city,
-          bioMessage: values.bioMessage,
-          telNumber: values.telNumber,
-          avatarUrl: values.avatarUrl
-        },
-        onCompleted: () => {
-          alert('Os dados foram salvados com sucesso');
-          window.location.reload();
-        }
-      })
+      await userProfileUpdate(
+        values.name,
+        values.telNumber,
+        values.city,
+        user.email,
+        values.bioMessage,
+        values.avatarURL
+      );
+      alert('Seu perfil foi atualizado com sucesso!');
+      setIsLoading(false);
     } catch (error: any) {
-      alert('Error: ' + error.message)
+      console.log(error.message);
+      setIsLoading(false);
     }
   };
 
-  console.log(values);
+  useEffect(() => {
+    getUserInfo();
+  },[]);
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      <main className="md:bg-right-img md:bg-right md:bg-contain bg-no-repeat flex flex-col">
-
-        <h2 className="text-blue-500 px-16 pt-14 pb-6 text-center">
+      <main className="md:bg-right-img md:bg-right md:bg-contain bg-no-repeat flex flex-col flex-grow">
+          <h2 className="text-blue-500 px-16 pt-14 pb-6 text-center">
           Esse é o perfil que aparece para responsáveis ou ONGs que recebem sua mensagem.
         </h2>
-
-        <form onSubmit={handleSave} className="bg-gray-300 flex flex-col mx-6 mb-4 rounded-md px-4 py-8 place-items-center w-[95%] md:w-[80%] max-w-[312px] md:max-w-[550px] self-center">
+        <form onSubmit={handleSave} className="bg-gray-300 flex flex-col flex-grow mx-6 mb-4 rounded-md px-4 py-8 place-items-center w-[95%] md:w-[80%] max-w-[312px] md:max-w-[550px] self-center">
+          {isLoading ? <Loading /> :
+          <>
           <h2 className="text-gray-900 font-semibold text-center mb-4">
             Perfil
           </h2>
@@ -126,15 +148,12 @@ export function Profile() {
               Foto
             </label>
             <div className="flex flex-col place-items-center relative">
-              {userInfo.avatarUrl ? (
-                <img src={userInfo.avatarUrl} alt=""
-                className="w-20 mb-1 rounded-full object-cover max-h-[80px] max-w-[80px]"
-              />
-              ) : (
+              { values.avatarURL ? <img src={values.avatarURL} alt=""
+                className="w-20 h-20 mb-1 rounded-full object-cover max-h-[80px] max-w-[80px]"
+              /> : 
                 <img src={defaultProfile} alt=""
                 className="w-20 mb-1 rounded-full object-cover max-h-[80px] max-w-[80px]"
-              />
-              )}
+              />}
               <input type="file" accept="img/*" 
                 onChange={imgInpuChange}
                 className="opacity-0 absolute h-[80px] w-[80px]"
@@ -154,7 +173,7 @@ export function Profile() {
             </label>
             <Input name="Nome" type="text"
             required={true} 
-            value={userInfo.name}
+            value={values.name}
             id='name-input'
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
@@ -169,7 +188,8 @@ export function Profile() {
             >
               Telefone
             </label>
-            <Input name="tel" type="tel" value={userInfo.telNumber} 
+            <Input name="tel" type="tel" 
+            value={values.telNumber} 
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               telNumber: e.target.value
@@ -182,7 +202,8 @@ export function Profile() {
             >
               Cidade
             </label>
-            <Input name="cidade" type="text" value={userInfo.city} 
+            <Input name="cidade" type="text" 
+            value={values.city} 
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               city: e.target.value
@@ -198,7 +219,7 @@ export function Profile() {
             <textarea name="message" id="message" 
               cols={15} rows={5} 
               className="rounded-md mb-8 pl-4 pt-4 shadow-md min-w-[240px] max-w-[336px] md:max-w-[492px] self-center w-full"
-              defaultValue={userInfo.bioMessage}
+              defaultValue={values.bioMessage}
               onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setValues({ 
                 ...values,
                 bioMessage: e.target.value
@@ -207,10 +228,10 @@ export function Profile() {
             </textarea>
           </div>
 
-          <Button name="Salvar" click={handleSave} />
+          <Button name="Salvar" click={handleSave} loading={isLoading} />
+          </>}
         </form>
       </main>
-
       <Footer />
     </div>
   )
