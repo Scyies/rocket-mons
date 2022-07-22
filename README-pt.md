@@ -22,8 +22,8 @@ Se tiver alguns erro durante a criação de uma nova conta e quiser ver a aplica
   - [X] Desenvolver as páginas como mobile first
 - [X] Segunda semana
   - [X] Adatar as páginas feitas para serem responsivas
-- [ ] Terceira semana
-  - [ ] Carregando...
+- [X] Terceira semana
+  - [X] Renderização dinâmica das páginas com JavaScript
 - [ ] Quarta semana
   - [ ] Carregando...
 
@@ -33,15 +33,19 @@ Se tiver alguns erro durante a criação de uma nova conta e quiser ver a aplica
 - [Vite](https://vitejs.dev/)
 - [React](https://reactjs.org/)
 - [Tailwindcss](https://tailwindcss.com/)
-- [GraphQL](https://graphql.org/)
-- [GraphCMS](https://graphcms.com/)
+<!-- - [GraphQL](https://graphql.org/) -->
+- [Firebase](https://firebase.google.com/)
 - [ApolloClient](https://www.apollographql.com/docs/react/)
 
 ### Objetivos
 
-- [X] Autenticação com API do graphCMS e ApolloClient
+- [X] Autenticação com a API do Firebase
   - [X] Redirecionamento automático para página de adoção se já autenticado
   - [X] Mostrar informações do perfil conforme salvo na API 
   - [X] Atualizar as informações pelo site
 
+- [X] Loading States durante carregamento de dados da API
+
 - [ ] Histórico das mensagens enviadas
+
+- [ ] Nova página para adicionar novos animais para adoção

@@ -19,8 +19,8 @@ If you experience some errors while trying do create a new account and want to s
   - [X] Build the pages following the mobile first approach
 - [X] Second week
   - [X] Adapt the built pages to be responsive
-- [ ] Third week
-  - [ ] Loading...
+- [X] Third week
+  - [X] Dynamic rendering of pages with JavaScript
 - [ ] Fourth week
   - [ ] Loading...
 
@@ -30,15 +30,19 @@ If you experience some errors while trying do create a new account and want to s
 - [Vite](https://vitejs.dev/)
 - [React](https://reactjs.org/)
 - [Tailwindcss](https://tailwindcss.com/)
-- [GraphQL](https://graphql.org/)
-- [GraphCMS](https://graphcms.com/)
+<!-- - [GraphQL](https://graphql.org/) -->
+- [Firebase](https://firebase.google.com/)
 - [ApolloClient](https://www.apollographql.com/docs/react/)
 
 ### Goals
 
-- [X] Authentication with graphCMS API and ApolloClient
+- [X] Authentication with Firebase API
   - [X] Auto redirect to adoption page if already authenticated
   - [X] Display profile data from the API information
   - [X] Update profile informations
 
-- [ ] History of messages sent
+- [X] Loading States for API requests
+
+- [ ] History of messages sent page
+
+- [ ] Page to add new animals for adoption
