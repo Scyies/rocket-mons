@@ -3,48 +3,13 @@ import { Header } from "../components/Header";
 import defaultProfile from '../assets/prof-icon.svg';
 import { Input } from "../components/Inputs";
 import { Button } from "../components/Button";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { convertBase64 } from "../utils/convertBase64";
-import { Loading } from "../components/Loading";
 import { useUserAuth } from "../firebase/UserAuthContext";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
 import { userProfileUpdate } from "../firebase/UserProfileUpdate";
-
-const INFO_QUERY = gql`
-  query GetInfoUser($id: ID!) {
-    userProfile(where: {id: $id}) {
-      avatarUrl
-      bioMessage
-      city
-      name
-      telNumber
-    }
-  }
-`
-
-const UPDATE_INFO_MUTATION = gql`
-mutation MyMutation($id: ID!, $name: String!, $bioMessage: String, $city: String, $telNumber: String, $avatarUrl: String) {
-  updateUserProfile(
-    where: {id: $id}
-    data: {name: $name, bioMessage: $bioMessage, city: $city, telNumber: $telNumber, avatarUrl: $avatarUrl}
-  ) {
-    name
-    city
-    bioMessage
-    telNumber
-    avatarUrl
-  }
-  publishUserProfile(where: {id: $id}) {
-    name
-    city
-    bioMessage
-    telNumber
-    avatarUrl
-  }
-}
-`
+import { ErrorMessage } from "../components/ErrorMEssage";
 
 export function Profile() {
   const [values, setValues]: any = useState({
@@ -54,6 +19,8 @@ export function Profile() {
     bioMessage: '',
     avatarURL: ''
   });
+
+  const [error, setError] = useState('')
 
   const [isLoading, setIsLoading] = useState(false)
   
@@ -95,14 +62,14 @@ export function Profile() {
     setIsLoading(true);
     e.preventDefault();
     
-    if(values.name === undefined) {
-      return alert('Por favor informe seu nome');
+    if(values.name === undefined || !values.name) {
+      return setError('Por favor informe seu nome');
     }
-    if(values.telNumber === undefined) {
-      return alert('Por favor informe seu telefone');
+    if(values.telNumber === undefined || !values.telNumber) {
+      return setError('Por favor informe seu telefone');
     }
-    if(values.city === undefined) {
-      return alert('Por favor informe sua cidade');
+    if(values.city === undefined || !values.city) {
+      return setError('Por favor informe sua cidade');
     }
 
     try {
@@ -117,6 +84,7 @@ export function Profile() {
       alert('Seu perfil foi atualizado com sucesso!');
       setIsLoading(false);
     } catch (error: any) {
+      setError(error.message);
       console.log(error.message);
       setIsLoading(false);
     }
@@ -135,8 +103,6 @@ export function Profile() {
           Esse é o perfil que aparece para responsáveis ou ONGs que recebem sua mensagem.
         </h2>
         <form onSubmit={handleSave} className="bg-gray-300 flex flex-col flex-grow mx-6 mb-4 rounded-md px-4 py-8 place-items-center w-[95%] md:w-[80%] max-w-[312px] md:max-w-[550px] self-center">
-          {isLoading ? <Loading /> :
-          <>
           <h2 className="text-gray-900 font-semibold text-center mb-4">
             Perfil
           </h2>
@@ -172,7 +138,6 @@ export function Profile() {
               Nome
             </label>
             <Input name="Nome" type="text"
-            required={true} 
             value={values.name}
             id='name-input'
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
@@ -228,8 +193,9 @@ export function Profile() {
             </textarea>
           </div>
 
+          { error && <ErrorMessage error={error} /> }
+
           <Button name="Salvar" click={handleSave} loading={isLoading} />
-          </>}
         </form>
       </main>
       <Footer />

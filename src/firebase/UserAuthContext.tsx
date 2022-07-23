@@ -8,11 +8,11 @@ export function UserAuthContextProvider({children}: any) {
   const [user, setUser] = useState("");
 
   function signUp(email: string, password: string) {
-    return createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password)
   }
 
   function logIn(email: string, password: string) {
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password)
   }
 
   function logOut() {

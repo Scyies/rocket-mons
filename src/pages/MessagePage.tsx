@@ -1,38 +1,13 @@
-import { gql } from "@apollo/client";
 import { getDocs, collection } from "firebase/firestore";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button } from "../components/Button";
+import { ErrorMessage } from "../components/ErrorMEssage";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Input } from "../components/Inputs";
-import { Loading } from "../components/Loading";
 import { createNewMessage } from "../firebase/CreateNewMessage";
 import { db } from "../firebase/Firebase";
 import { useUserAuth } from "../firebase/UserAuthContext";
-import { userProfileCreation } from "../firebase/UserProfileCreation";
-
-const ANIMALS_QUERY = gql`
-query AnimalsQuery ($id: ID!) {
-  animals {
-    id
-    name
-  }
-  userProfile(where: {id: $id}) {
-    name
-    telNumber
-  }
-}
-`
-
-const CREATE_NEW_MESSAGE_MUTATION = gql`
-  mutation NewMessage($name: String!, $telNumber: String!, $adoptionMessage: String!, $animalNames: AnimalsEnum!, $animalId: ID!, $userId: ID!) {
-    createAdoptionMessage(
-      data: {name: $name, telNumber: $telNumber, adoptionMessage: $adoptionMessage, animalNames: $animalNames, animal: {connect: {id: $animalId}}, userProfile: {connect: {id: $userId}}}
-    ) {
-      id
-    }
-  }
-`
 
 export function MessagePage() {
   const [values, setValues] = useState({
@@ -43,6 +18,7 @@ export function MessagePage() {
   });
   const [animalsList, setAnimalsList]: any = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   
   const { user } = useUserAuth();
 
@@ -66,21 +42,26 @@ export function MessagePage() {
     
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+
+    if(!values.name || !values.telNumber || !values.selectAnimal || !values.adoptionMessage) return setError('Favor preencher todos os campos.')
+
     setIsLoading(true);
 
-    await createNewMessage(
-      values.name,
-      values.telNumber,
-      values.selectAnimal,
-      values.adoptionMessage,
-      user.email
-    );
-
+    try {
+      await createNewMessage(
+        values.name,
+        values.telNumber,
+        values.selectAnimal,
+        values.adoptionMessage,
+        user.email
+      )
+    } catch (error: any) {
+      setError(error.message)
+      console.log(error.message);
+    }
+    
     setIsLoading(false);
-    alert('Sua mensagem foi enviada com sucesso!');
   }
-
-  console.log(values);
 
   useEffect(() => {
     getAnimalsInfo()
@@ -107,7 +88,6 @@ export function MessagePage() {
             <Input name="Nome" 
             holder="Insira seu nome completo" 
             type="text" 
-            required={true} 
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               name: e.target.value
@@ -123,7 +103,6 @@ export function MessagePage() {
             <Input name="Telefone" 
             holder="Insira seu telefone e/ou whatsapp" 
             type="tel" 
-            required={true} 
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               telNumber: e.target.value
@@ -138,7 +117,6 @@ export function MessagePage() {
             </label>
             <select name="" id="test" 
             className="px-4 py-3 rounded-md shadow-md" 
-            required
             onChange={(e: ChangeEvent<HTMLSelectElement>) => setValues({ 
               ...values,
               selectAnimal: e.target.value
@@ -160,7 +138,6 @@ export function MessagePage() {
             <textarea name="message" id="message" 
               cols={15} rows={5} 
               placeholder="Escreva sua mensagem"
-              required
               className="rounded-md mb-8 pl-4 pt-4 shadow-md min-w-[240px] max-w-[336px] md:max-w-[492px] w-full self-center"
               onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setValues({ 
                 ...values,
@@ -169,6 +146,8 @@ export function MessagePage() {
             >
             </textarea>
           </div>
+
+          { error && <ErrorMessage error={error} />}
 
           <Button name="Enviar" loading={isLoading} />
         </form>

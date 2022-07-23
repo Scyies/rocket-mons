@@ -6,10 +6,11 @@ import { Input } from "../components/Inputs"
 import { Button } from "../components/Button"
 import { ChangeEvent, FormEvent, useState } from "react"
 import { gql } from "@apollo/client"
-import { Eye, EyeSlash } from "phosphor-react"
+import { Eye, EyeSlash, Password } from "phosphor-react"
 import { useNavigate } from "react-router-dom"
 import { useUserAuth } from "../firebase/UserAuthContext"
 import { userProfileCreation } from "../firebase/UserProfileCreation"
+import { ErrorMessage } from "../components/ErrorMEssage"
 
 const CREATE_NEW_USER_MUTATION = gql`
   mutation CreateUserAccount($name: String!, $email: String!, $password: String!) {
@@ -53,19 +54,21 @@ export function SignIn() {
   async function submitForm(e: FormEvent) {
     e.preventDefault();
     setError('');
+    if(!formState.email || !formState.password || !formState.name || !formState.passwordConfirm) return setError('Favor preencher todos os campos.')
+    if(formState.password != formState.passwordConfirm) return setError('Favor confirmar sua senha.')
+    
     setIsLoading(true);
-
     try {
       await signUp(formState.email, formState.password).then(() => {
-        userProfileCreation(formState.name, formState.email);
+        userProfileCreation(formState.name, formState.email),
+        navigate('/adopt/adoption-list')
       });
-      setIsLoading(false);
-      alert('Seu cadastro foi realizado com sucesso!');
-      navigate('/adopt/adoption-list');      
+      setIsLoading(false); 
     } catch (erro: any) {
+      if(erro.code === 'auth/invalid-email') {setError('Favor informar um e-mail válido.')}
+      if(erro.code === 'auth/network-request-failed') {setError('Houve um erro na conexão, favor tentar novamente.')}
       setIsLoading(false);
-      setError(erro.message);
-      alert(error);
+      console.log(erro.message)
     }
   }
 
@@ -107,7 +110,7 @@ export function SignIn() {
               email: e.target.value
             })}
             textcenter="text-center"
-            required={true}
+            // required={true}
           />
         </div>
 
@@ -126,7 +129,7 @@ export function SignIn() {
               name: e.target.value
             })}
             textcenter="text-center"
-            required={true}
+            // required={true}
           />
         </div>
 
@@ -145,7 +148,7 @@ export function SignIn() {
               password: e.target.value
             })}
             textcenter="text-center"
-            required={true}
+            // required={true}
           />
           <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-50" onClick={changePasswordVisibility}>
             {visiblePassword ? (<Eye />) : (<EyeSlash />)}
@@ -166,14 +169,17 @@ export function SignIn() {
               ...formState,
               passwordConfirm: e.target.value
             })}
-            padrao={formState.password}
+            // padrao={formState.password}
             textcenter="text-center"
-            required={true}
+            // required={true}
           />
           <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-50" onClick={changePasswordVisibility}>
             {visiblePassword ? (<Eye />) : (<EyeSlash />)}
           </div>
         </div>
+
+        { error && <ErrorMessage error={error} />}
+
         <Button name="Cadastrar" loading={isLoading} />
       </form>
 

@@ -5,12 +5,12 @@ import { Footer } from "../components/Footer"
 import { Input } from "../components/Inputs"
 import { Button } from "../components/Button"
 import { ChangeEvent, FormEvent, useState } from "react"
-import { gql, useQuery } from "@apollo/client"
+import { gql } from "@apollo/client"
 import { useNavigate } from "react-router-dom"
 import { Eye, EyeSlash } from "phosphor-react"
-import { signInWithEmailAndPassword } from 'firebase/auth'
 import { app } from "../firebase/Firebase"
 import { useUserAuth } from "../firebase/UserAuthContext"
+import { ErrorMessage } from "../components/ErrorMEssage"
 
 const LOGIN_QUERY = gql`
   query LoginQuery($email: String!, $password: String!) {
@@ -37,13 +37,6 @@ export function LogIn() {
   app
   
   const navigate = useNavigate();
-  
-  const { data } = useQuery(LOGIN_QUERY, {
-    variables: {
-      email: email,
-      password: senha
-    }
-  });
 
   function changePasswordVisibility() {
     setVisiblePassword(true)
@@ -56,19 +49,23 @@ export function LogIn() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-
     setError('');
+
+    if(!email || !senha) return setError('Informe e-mail e senha.')
+
     setIsLoading(true);
 
     try {
-      await logIn(email, senha);
+      await logIn(email, senha).then(() => {
+        navigate('/adopt/adoption-list')
+      })
       setIsLoading(false);
-      alert('Seu login foi realizado com sucesso!');
-      navigate('/adopt/adoption-list');      
     } catch (erro: any) {
-      setIsLoading(false);
-      setError(erro.message);
-      alert(error);
+      if(erro.code === 'auth/invalid-email') {setError('E-mail inválido.')}
+      if(erro.code === 'auth/user-not-found') {setError('E-mail não cadastrado.')}
+      if(erro.code === 'auth/wrong-password') {setError('E-mail ou senha inválido.')}
+      setIsLoading(false)
+      console.log(erro.message);
     }
   };
 
@@ -96,7 +93,11 @@ export function LogIn() {
             >
               Email
             </label>
-            <Input name="email" textcenter="text-center" holder="Insira seu email" type="email" required={true} change={(event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)} />
+            <Input name="email" 
+            textcenter="text-center" 
+            holder="Insira seu email" 
+            type="email" 
+            change={(event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)} />
           </div>
 
           <div className="flex flex-col text-center pb-4 relative w-full max-w-[336px] md:max-w-[344px]">
@@ -105,7 +106,11 @@ export function LogIn() {
             >
               Senha
             </label>
-            <Input name="senha" textcenter="text-center" holder="Insira sua senha" type={visibilityType} required={true} change={(event: ChangeEvent<HTMLInputElement>) => setSenha(event.target.value)} />
+            <Input name="senha" 
+            textcenter="text-center" 
+            holder="Insira sua senha" 
+            type={visibilityType} 
+            change={(event: ChangeEvent<HTMLInputElement>) => setSenha(event.target.value)} />
 
             <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-50" onClick={changePasswordVisibility}>
               {visiblePassword ? (<Eye />) : (<EyeSlash />)}
@@ -115,6 +120,8 @@ export function LogIn() {
               Esqueci minha senha
             </span>
           </div>
+          {error && <ErrorMessage error={error} />}
+
           <Button name="Entrar" loading={isLoading} />
         </form>
 
