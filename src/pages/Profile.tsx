@@ -6,10 +6,9 @@ import { Button } from "../components/Button";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { convertBase64 } from "../utils/convertBase64";
 import { useUserAuth } from "../firebase/UserAuthContext";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../firebase/Firebase";
 import { userProfileUpdate } from "../firebase/UserProfileUpdate";
 import { ErrorMessage } from "../components/ErrorMessage";
+import { getUserInfo } from "../firebase/GetUserInfo";
 
 export function Profile() {
   const [values, setValues]: any = useState({
@@ -35,28 +34,6 @@ export function Profile() {
         avatarURL: base64
       })
   };
-  
-  async function getUserInfo() {
-    setIsLoading(true);
-    const userInfo: any = [];    
-
-    const q = query(collection (db, 'userProfile'), where('email', '==', user.email));
-
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      userInfo.push({... doc.data(), id: doc.id})
-    });
-    setValues(
-      {
-        name: userInfo[0].name,
-        telNumber: userInfo[0].telNumber,
-        city: userInfo[0].city,
-        bioMessage: userInfo[0].bioMessage,
-        avatarURL: userInfo[0].avatarURL
-      }
-    )
-    setIsLoading(false);
-  }
   
   async function handleSave(e: FormEvent) {
     setIsLoading(true);
@@ -96,7 +73,7 @@ export function Profile() {
   };
 
   useEffect(() => {
-    getUserInfo();
+    if(user){getUserInfo(user, setValues)}
   },[]);
 
   return (

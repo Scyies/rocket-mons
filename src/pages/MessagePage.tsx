@@ -7,6 +7,7 @@ import { Header } from "../components/Header";
 import { Input } from "../components/Inputs";
 import { createNewMessage } from "../firebase/CreateNewMessage";
 import { db } from "../firebase/Firebase";
+import { getUserInfo } from "../firebase/GetUserInfo";
 import { useUserAuth } from "../firebase/UserAuthContext";
 
 export function MessagePage() {
@@ -66,6 +67,7 @@ export function MessagePage() {
 
   useEffect(() => {
     getAnimalsInfo()
+    if(user){getUserInfo(user, setValues)}
   },[]);
 
   return (
@@ -89,6 +91,7 @@ export function MessagePage() {
             <Input name="Nome" 
             holder="Insira seu nome completo" 
             type="text" 
+            value={values.name}
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               name: e.target.value
@@ -104,6 +107,7 @@ export function MessagePage() {
             <Input name="Telefone" 
             holder="Insira seu telefone e/ou whatsapp" 
             type="tel" 
+            value={values.telNumber}
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               telNumber: e.target.value
@@ -118,6 +122,7 @@ export function MessagePage() {
             </label>
             <select name="" id="test" 
             className="px-4 py-3 rounded-md shadow-md" 
+            value={values.selectAnimal}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => setValues({ 
               ...values,
               selectAnimal: e.target.value
@@ -138,6 +143,7 @@ export function MessagePage() {
             </label>
             <textarea name="message" id="message" 
               cols={15} rows={5} 
+              value={values.adoptionMessage}
               placeholder="Escreva sua mensagem"
               className="rounded-md mb-8 pl-4 pt-4 shadow-md min-w-[240px] max-w-[336px] md:max-w-[492px] w-full self-center"
               onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setValues({ 
