@@ -50,7 +50,7 @@ export function Header() {
   }
 
   useEffect(() => {
-    if(user != null && user != undefined) {getUserAvatar();}
+    if(user) {getUserAvatar()}
   },[]);
 
   return (

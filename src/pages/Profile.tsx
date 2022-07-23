@@ -71,6 +71,9 @@ export function Profile() {
     if(values.city === undefined || !values.city) {
       return setError('Por favor informe sua cidade');
     }
+    if(values.bioMessage === undefined || !values.bioMessage) {
+      return setError('Por favor preencha o campo "Sobre"');
+    }
 
     try {
       await userProfileUpdate(
@@ -84,10 +87,12 @@ export function Profile() {
       alert('Seu perfil foi atualizado com sucesso!');
       setIsLoading(false);
     } catch (error: any) {
+      if(error.code === 'invalid-argument') {setError('O tamanho da imagem escolhida é muito grande.')}
       setError(error.message);
-      console.log(error.message);
+      console.log(error.code);
       setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
