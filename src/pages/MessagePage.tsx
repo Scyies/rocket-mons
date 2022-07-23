@@ -1,7 +1,7 @@
 import { getDocs, collection } from "firebase/firestore";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button } from "../components/Button";
-import { ErrorMessage } from "../components/ErrorMEssage";
+import { ErrorMessage } from "../components/ErrorMessage";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Input } from "../components/Inputs";
@@ -36,6 +36,7 @@ export function MessagePage() {
       })  
     } catch (error: any) {
       setIsLoading(false);
+      setError(error.message);
       console.log(error.message);      
     }
   }

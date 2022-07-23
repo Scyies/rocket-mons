@@ -9,7 +9,7 @@ import { useUserAuth } from "../firebase/UserAuthContext";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
 import { userProfileUpdate } from "../firebase/UserProfileUpdate";
-import { ErrorMessage } from "../components/ErrorMEssage";
+import { ErrorMessage } from "../components/ErrorMessage";
 
 export function Profile() {
   const [values, setValues]: any = useState({

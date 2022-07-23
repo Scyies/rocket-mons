@@ -10,7 +10,7 @@ import { Eye, EyeSlash, Password } from "phosphor-react"
 import { useNavigate } from "react-router-dom"
 import { useUserAuth } from "../firebase/UserAuthContext"
 import { userProfileCreation } from "../firebase/UserProfileCreation"
-import { ErrorMessage } from "../components/ErrorMEssage"
+import { ErrorMessage } from "../components/ErrorMessage"
 
 const CREATE_NEW_USER_MUTATION = gql`
   mutation CreateUserAccount($name: String!, $email: String!, $password: String!) {
@@ -110,7 +110,6 @@ export function SignIn() {
               email: e.target.value
             })}
             textcenter="text-center"
-            // required={true}
           />
         </div>
 
@@ -129,7 +128,6 @@ export function SignIn() {
               name: e.target.value
             })}
             textcenter="text-center"
-            // required={true}
           />
         </div>
 
@@ -148,7 +146,6 @@ export function SignIn() {
               password: e.target.value
             })}
             textcenter="text-center"
-            // required={true}
           />
           <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-50" onClick={changePasswordVisibility}>
             {visiblePassword ? (<Eye />) : (<EyeSlash />)}
@@ -169,9 +166,7 @@ export function SignIn() {
               ...formState,
               passwordConfirm: e.target.value
             })}
-            // padrao={formState.password}
             textcenter="text-center"
-            // required={true}
           />
           <div className="absolute right-3 top-11 text-gray-500 cursor-pointer z-50" onClick={changePasswordVisibility}>
             {visiblePassword ? (<Eye />) : (<EyeSlash />)}

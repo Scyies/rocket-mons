@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom"
 import { Eye, EyeSlash } from "phosphor-react"
 import { app } from "../firebase/Firebase"
 import { useUserAuth } from "../firebase/UserAuthContext"
-import { ErrorMessage } from "../components/ErrorMEssage"
+import { ErrorMessage } from "../components/ErrorMessage"
 
 const LOGIN_QUERY = gql`
   query LoginQuery($email: String!, $password: String!) {
