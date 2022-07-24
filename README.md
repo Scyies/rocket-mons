@@ -26,13 +26,11 @@ If you experience some errors while trying do create a new account and want to s
 
 ### Techonologies
 
+- [React](https://reactjs.org/)
 - [Typescript](https://www.typescriptlang.org/)
 - [Vite](https://vitejs.dev/)
-- [React](https://reactjs.org/)
 - [Tailwindcss](https://tailwindcss.com/)
-<!-- - [GraphQL](https://graphql.org/) -->
 - [Firebase](https://firebase.google.com/)
-- [ApolloClient](https://www.apollographql.com/docs/react/)
 
 ### Goals
 

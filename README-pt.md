@@ -29,13 +29,12 @@ Se tiver alguns erro durante a criação de uma nova conta e quiser ver a aplica
 
 ### Tecnologias
 
+- [React](https://reactjs.org/)
 - [Typescript](https://www.typescriptlang.org/)
 - [Vite](https://vitejs.dev/)
-- [React](https://reactjs.org/)
 - [Tailwindcss](https://tailwindcss.com/)
-<!-- - [GraphQL](https://graphql.org/) -->
 - [Firebase](https://firebase.google.com/)
-- [ApolloClient](https://www.apollographql.com/docs/react/)
+<!-- - [ApolloClient](https://www.apollographql.com/docs/react/) -->
 
 ### Objetivos
 

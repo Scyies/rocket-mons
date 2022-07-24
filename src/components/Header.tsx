@@ -6,8 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { useUserAuth } from '../firebase/UserAuthContext';
 import { useEffect, useState } from 'react';
-import { query, where, collection, getDocs, doc } from 'firebase/firestore';
+import { query, where, collection, getDocs } from 'firebase/firestore';
 import { db } from "../firebase/Firebase";
+import { SignOut } from 'phosphor-react';
 
 export function Header() {
   const { user, logOut }: any = useUserAuth();
@@ -80,17 +81,7 @@ export function Header() {
           </Link>
         </div>
       </div>
-      <div className='flex cursor-pointer z-40'>
-        <div onClick={handleLogOut}
-          className={classNames('text-green-500 z-40 mt-12 mb-1 bg-white rounded-md', {
-            'hidden': !athenticated,
-            'inline-flex': athenticated
-          })}
-        >
-          <p className='border-2 border-green-500 p-1 rounded-md font-semibold text-sm  z-40'>
-            LogOut
-          </p>
-        </div>
+      <div className='flex flex-col cursor-pointer z-40'>
         <Link to={`/adopt/profile${uid}`} className='z-10' >
           {avatar ? 
             <img src={avatar} alt=""
@@ -107,6 +98,19 @@ export function Header() {
             })}
           />}
         </Link>
+        <div onClick={handleLogOut}
+          className={classNames('text-green-500 z-40 mt-1 bg-white rounded-full border-2 border-green-500 h-10 w-10 place-items-center relative group', {
+            'hidden': !athenticated,
+            'inline-flex': athenticated
+          })}
+        >
+          <div className='pl-[6px]'>
+            <SignOut size={25} />
+          </div>
+          <p className='absolute right-4 border-2 border-green-500 px-2 rounded-md font-semibold text-sm z-10 opacity-0 group-hover:-translate-x-6 group-hover:opacity-100 group-hover:ease-in-out group-hover:duration-1000'>
+            Sair
+          </p>
+        </div>
       </div>
     </header>
   )

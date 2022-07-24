@@ -16,6 +16,15 @@ module.exports = {
        '16': '4rem',
     },
     extend: {
+      keyframes: {
+        progressBar: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(100%)' },
+        }
+      },
+      animation: {
+        'progress': 'progressBar 5s linear'
+      },
       backgroundImage: {
         'right-img': "url('assets/right-img.svg')",
         'left-img': "url('assets/left-img.svg')",
