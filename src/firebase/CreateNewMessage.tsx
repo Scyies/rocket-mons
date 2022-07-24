@@ -10,7 +10,5 @@ export async function createNewMessage(name: string, telNumber: string, animalNa
       message,
       email
     },
-    { merge: true }).then(() => {
-      alert('Sua mensagem foi enviada com sucesso!');
-    })
+    { merge: true })
 }

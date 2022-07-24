@@ -4,13 +4,14 @@ import pawns from "../assets/pawns.svg"
 import { Footer } from "../components/Footer"
 import { Input } from "../components/Inputs"
 import { Button } from "../components/Button"
-import { ChangeEvent, FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { gql } from "@apollo/client"
 import { useNavigate } from "react-router-dom"
-import { Eye, EyeSlash } from "phosphor-react"
+import { Eye, EyeSlash, Info } from "phosphor-react"
 import { app } from "../firebase/Firebase"
 import { useUserAuth } from "../firebase/UserAuthContext"
 import { ErrorMessage } from "../components/ErrorMessage"
+import { SuccessPopUp } from "../components/SuccessPopUp"
 
 const LOGIN_QUERY = gql`
   query LoginQuery($email: String!, $password: String!) {
@@ -27,6 +28,8 @@ export function LogIn() {
 
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visibilityType, setVisibilityType] = useState('password');
+
+  const [popUp, setPopUp] = useState(false);  
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -47,6 +50,17 @@ export function LogIn() {
     }  
   }
 
+  let navigateTimeout;
+
+  function timedNavigate(): void {
+    navigateTimeout = setTimeout(popUpNavigate, 5000)
+  }
+
+  function popUpNavigate(): any {
+    navigate('/adopt/adoption-list');
+    setPopUp(false);
+  }
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError('');
@@ -57,7 +71,8 @@ export function LogIn() {
 
     try {
       await logIn(email, senha).then(() => {
-        navigate('/adopt/adoption-list')
+        setPopUp(true),
+        timedNavigate()
       })
       setIsLoading(false);
     } catch (erro: any) {
@@ -72,6 +87,7 @@ export function LogIn() {
   return (
     <div className="min-h-[100vh] flex flex-col justify-between">
       <Header />
+      { popUp && <SuccessPopUp loadingBar={true} onClick={popUpNavigate} message="Seu login foi realizado com sucesso" />}
 
       <main className="bg-left-img bg-no-repeat bg-left-bottom md:bg-right-img md:bg-right md:bg-contain">
         <div className="flex justify-center pb-6">
@@ -100,7 +116,7 @@ export function LogIn() {
             change={(event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)} />
           </div>
 
-          <div className="flex flex-col text-center pb-4 relative w-full max-w-[336px] md:max-w-[344px]">
+          <div className="flex flex-col text-center pb-4 relative w-full max-w-[336px] md:max-w-[344px] mb-2">
             <label htmlFor=""
               className="text-gray-900 pb-1"
             >

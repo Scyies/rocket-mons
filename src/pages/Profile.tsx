@@ -9,6 +9,7 @@ import { useUserAuth } from "../firebase/UserAuthContext";
 import { userProfileUpdate } from "../firebase/UserProfileUpdate";
 import { ErrorMessage } from "../components/ErrorMessage";
 import { getUserInfo } from "../firebase/GetUserInfo";
+import { SuccessPopUp } from "../components/SuccessPopUp";
 
 export function Profile() {
   const [values, setValues]: any = useState({
@@ -22,8 +23,14 @@ export function Profile() {
   const [error, setError] = useState('')
 
   const [isLoading, setIsLoading] = useState(false)
+
+  const [popUp, setPopUp] = useState(false);
   
   const { user } = useUserAuth();  
+
+  function popUpNavigate(): void {
+    setPopUp(false);
+  }
   
   async function imgInpuChange(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files![0];
@@ -61,7 +68,7 @@ export function Profile() {
         values.bioMessage,
         values.avatarURL
       );
-      alert('Seu perfil foi atualizado com sucesso!');
+      setPopUp(true);
       setIsLoading(false);
     } catch (error: any) {
       if(error.code === 'invalid-argument') {setError('O tamanho da imagem escolhida é muito grande.')}
@@ -79,6 +86,8 @@ export function Profile() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
+
+      { popUp && <SuccessPopUp loadingBar={false} onClick={popUpNavigate} message="Seus dados foram salvos com sucesso!" />}
 
       <main className="md:bg-right-img md:bg-right md:bg-contain bg-no-repeat flex flex-col flex-grow">
           <h2 className="text-blue-500 px-16 pt-14 pb-6 text-center">

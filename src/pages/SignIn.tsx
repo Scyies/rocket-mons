@@ -152,7 +152,7 @@ export function SignIn() {
           </div>
         </div>
 
-        <div className="flex flex-col text-center pb-4 relative w-full max-w-[336px] md:max-w-[344px]">
+        <div className="flex flex-col text-center pb-4 relative w-full max-w-[336px] md:max-w-[344px] mb-2">
           <label htmlFor=""
           className="text-gray-900 pb-1"
           >

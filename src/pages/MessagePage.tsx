@@ -5,6 +5,7 @@ import { ErrorMessage } from "../components/ErrorMessage";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Input } from "../components/Inputs";
+import { SuccessPopUp } from "../components/SuccessPopUp";
 import { createNewMessage } from "../firebase/CreateNewMessage";
 import { db } from "../firebase/Firebase";
 import { getUserInfo } from "../firebase/GetUserInfo";
@@ -20,8 +21,13 @@ export function MessagePage() {
   const [animalsList, setAnimalsList]: any = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [popUp, setPopUp] = useState(false);
   
   const { user } = useUserAuth();
+
+  function popUpNavigate(): void {
+    setPopUp(false);
+  }
 
   async function getAnimalsInfo() {
     const animals: any = []
@@ -56,7 +62,9 @@ export function MessagePage() {
         values.selectAnimal,
         values.adoptionMessage,
         user.email
-      )
+      ).then(() => {
+        setPopUp(true);
+      })
     } catch (error: any) {
       setError(error.message)
       console.log(error.message);
@@ -72,7 +80,10 @@ export function MessagePage() {
 
   return (
     <div className="min-h-screen">
+      { popUp && <SuccessPopUp loadingBar={false} onClick={popUpNavigate} message="Sua mensagem foi enviada com sucesso!" />}
+
       <Header />
+
       <main className="md:bg-right-img bg-no-repeat bg-right flex flex-col justify-center">
 
         <h2 className="text-blue-500 px-16 pt-14 pb-6 text-center">

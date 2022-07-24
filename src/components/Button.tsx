@@ -11,7 +11,7 @@ interface PropsName {
 export function Button(props: PropsName) {
   return (
       <button 
-        className={classNames("bg-red-500 m-2 py-2 rounded-md shadow-md w-[180px] text-white font-semibold hover:bg-red-400 transition-colors z-20",
+        className={classNames("bg-red-500 py-2 rounded-md shadow-md w-[180px] text-white font-semibold hover:bg-red-400 transition-colors z-20",
           {'disabled:opacity-50': props.loading,
             '': !props.loading
           }

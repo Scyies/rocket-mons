@@ -29,11 +29,11 @@ export function Home() {
           <p className='text-white text-center text-base pb-6 justify-center px-16 z-10'>
             Que tal mudar sua vida adotando seu novo melhor amigo? Vem com a gente!
           </p>
-          <Link to={'/log-in'} className='z-10'>
+          <Link to={'/log-in'} className='z-10 m-2'>
             <Button name='Já tenho conta' />
           </Link>
 
-          <Link to={'/sign-in'} className='z-10'>
+          <Link to={'/sign-in'} className='z-10 m-2'>
             <Button name='Quero me cadastrar' />
           </Link>
         </div>
