@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase/firestore";
-import { dateFormat } from "../lib/dateFormat";
+import { dateFormat } from "../utils/dateFormat";
 
 interface Props {
   animalName: string;

@@ -1,4 +1,5 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { ChatTeardropText } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/Button";
@@ -25,7 +26,7 @@ export function MessageHistory() {
 
     if(messageInfo.length > 0) {
       setMessages(messageInfo)
-    }
+    } 
 
   }
   console.log(messages);
@@ -48,14 +49,19 @@ export function MessageHistory() {
         </div>
 
         <section className='md:mx-5 mb-4'>
-          {messages.map((message: { animalName: string; message: string; created_at: any; uid: any }): any => (
+          { messages.length > 0 ? (messages.map((message: { animalName: string; message: string; created_at: any; uid: any }): any => (
             <MessageCard 
               animalName={message.animalName} 
               adoptionMessage={message.message}
               createdAt={message.created_at}
               key={message.uid}
             />
-          ))}
+            ))) : 
+            (<div className="text-gray-700 flex flex-col place-items-center">
+              <ChatTeardropText size={32} />
+              <p>Você não envio nenhuma mensagem ainda</p>
+            </div>)
+          }
         </section>
 
       </main>

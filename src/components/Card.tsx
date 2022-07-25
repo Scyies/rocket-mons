@@ -36,7 +36,7 @@ export function Card(props: PropsInfo) {
             <ChatDots size={22} />
           </div>
           <Link to={'/adopt/adoption-message'}
-          className="text-xs pt-1 cursor-pointer"
+            className="text-xs pt-1 cursor-pointer"
           >
             Falar com responsável
           </Link>
