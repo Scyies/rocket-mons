@@ -1,4 +1,4 @@
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, Firestore, FieldValue, Timestamp } from "firebase/firestore";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button } from "../components/Button";
 import { ErrorMessage } from "../components/ErrorMessage";
@@ -61,7 +61,8 @@ export function MessagePage() {
         values.telNumber,
         values.selectAnimal,
         values.adoptionMessage,
-        user.email
+        user.email,
+        new Date
       ).then(() => {
         setPopUp(true);
       })

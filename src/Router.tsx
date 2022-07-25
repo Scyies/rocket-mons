@@ -7,6 +7,7 @@ import { MessagePage } from "./pages/MessagePage";
 import { Profile } from "./pages/Profile";
 import { SignIn } from "./pages/SignIn";
 import { UserAuthContextProvider } from "./firebase/UserAuthContext";
+import { MessageHistory } from "./pages/MessageHistory";
 
 export function Router() {
   return (
@@ -18,6 +19,7 @@ export function Router() {
         <Route path={`/adopt/adoption-list`} element={<ProtectedRoute><Adopt /></ProtectedRoute>} />
         <Route path="/adopt/adoption-message" element={<MessagePage />} />
         <Route path="/adopt/profile:uid" element={<Profile />} />
+        <Route path="/adopt/message-history" element={<MessageHistory />} />
       </Routes>
     </UserAuthContextProvider>
   )

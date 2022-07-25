@@ -73,7 +73,7 @@ export function Header() {
           'pointer-events-none': !athenticated,
           'pointer-events-auto': athenticated,
         })}>
-          <Link to={'/adopt/adoption-message'} className={classNames('group', {
+          <Link to={'/adopt/message-history'} className={classNames('group', {
           'point-events-none': !athenticated,
           'point-events-auto': athenticated,
         })} > 

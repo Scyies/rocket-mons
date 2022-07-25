@@ -41,6 +41,4 @@ If you experience some errors while trying do create a new account and want to s
 
 - [X] Loading States for API requests
 
-- [ ] History of messages sent page
-
-- [ ] Page to add new animals for adoption
+- [X] History of messages sent page

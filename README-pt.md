@@ -34,7 +34,6 @@ Se tiver alguns erro durante a criação de uma nova conta e quiser ver a aplica
 - [Vite](https://vitejs.dev/)
 - [Tailwindcss](https://tailwindcss.com/)
 - [Firebase](https://firebase.google.com/)
-<!-- - [ApolloClient](https://www.apollographql.com/docs/react/) -->
 
 ### Objetivos
 
@@ -45,6 +44,4 @@ Se tiver alguns erro durante a criação de uma nova conta e quiser ver a aplica
 
 - [X] Loading States durante carregamento de dados da API
 
-- [ ] Histórico das mensagens enviadas
-
-- [ ] Nova página para adicionar novos animais para adoção
+- [X] Histórico das mensagens enviadas
