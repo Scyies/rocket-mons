@@ -7,20 +7,10 @@ import { Button } from "../components/Button"
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { gql } from "@apollo/client"
 import { useNavigate } from "react-router-dom"
-import { Eye, EyeSlash, Info } from "phosphor-react"
+import { Eye, EyeSlash } from "phosphor-react"
 import { app } from "../firebase/Firebase"
 import { useUserAuth } from "../firebase/UserAuthContext"
 import { ErrorMessage } from "../components/ErrorMessage"
-import { SuccessPopUp } from "../components/SuccessPopUp"
-
-const LOGIN_QUERY = gql`
-  query LoginQuery($email: String!, $password: String!) {
-    usersProfiles(where: {email: $email, password: $password}) {
-      id
-      email
-    }
-  }
-`
 
 export function LogIn() {
   const [email, setEmail] = useState('');
@@ -28,8 +18,6 @@ export function LogIn() {
 
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visibilityType, setVisibilityType] = useState('password');
-
-  const [popUp, setPopUp] = useState(false);  
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,17 +38,6 @@ export function LogIn() {
     }  
   }
 
-  let navigateTimeout;
-
-  function timedNavigate(): void {
-    navigateTimeout = setTimeout(popUpNavigate, 5000)
-  }
-
-  function popUpNavigate(): any {
-    navigate('/adopt/adoption-list');
-    setPopUp(false);
-  }
-
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError('');
@@ -71,8 +48,7 @@ export function LogIn() {
 
     try {
       await logIn(email, senha).then(() => {
-        setPopUp(true),
-        timedNavigate()
+        navigate('/adopt/adoption-list');
       })
       setIsLoading(false);
     } catch (erro: any) {
@@ -87,7 +63,6 @@ export function LogIn() {
   return (
     <div className="min-h-[100vh] flex flex-col justify-between">
       <Header />
-      { popUp && <SuccessPopUp loadingBar={true} onClick={popUpNavigate} message="Seu login foi realizado com sucesso" />}
 
       <main className="bg-left-img bg-no-repeat bg-left-bottom md:bg-right-img md:bg-right md:bg-contain">
         <div className="flex justify-center pb-6">
