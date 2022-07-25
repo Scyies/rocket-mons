@@ -84,19 +84,30 @@ export function Header() {
       <div className='flex flex-col cursor-pointer z-40'>
         <Link to={`/adopt/profile${uid}`} className='z-10' >
           {avatar ? 
+          <div className='group relative'>
             <img src={avatar} alt=""
             className={classNames('h-10 w-10 object-cover mt-11 mr-12 border-2 border-green-500 rounded-full z-40', {
               'hidden': !athenticated,
               'inline-flex': athenticated,
             })}
             />
+            <p className='absolute text-green-500 -left-8 bottom-2 border-2 border-green-500 px-2 rounded-md font-semibold text-sm z-10 opacity-0 group-hover:-translate-x-6 group-hover:opacity-100 group-hover:ease-in-out group-hover:duration-1000'>
+              Perfil
+            </p>
+          </div>
             :
+          <div className='group relative'>
             <img src={defaultProfile} alt=""
             className={classNames('h-10 w-10 mt-11 mr-12 rounded-full z-40', {
               'hidden': !athenticated,
               'inline-flex': athenticated,
             })}
-          />}
+            />
+            <p className='absolute text-green-500 -left-8 bottom-2 border-2 border-green-500 px-2 rounded-md font-semibold text-sm z-10 opacity-0 group-hover:-translate-x-6 group-hover:opacity-100 group-hover:ease-in-out group-hover:duration-1000'>
+                Perfil
+            </p>
+          </div>
+          }
         </Link>
         <div onClick={handleLogOut}
           className={classNames('text-green-500 z-40 mt-1 bg-white rounded-full border-2 border-green-500 h-10 w-10 place-items-center relative group', {
