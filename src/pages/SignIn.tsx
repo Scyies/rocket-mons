@@ -5,23 +5,12 @@ import { Footer } from "../components/Footer"
 import { Input } from "../components/Inputs"
 import { Button } from "../components/Button"
 import { ChangeEvent, FormEvent, useState } from "react"
-import { gql } from "@apollo/client"
-import { Eye, EyeSlash, Password } from "phosphor-react"
+import { Eye, EyeSlash } from "phosphor-react"
 import { useNavigate } from "react-router-dom"
 import { useUserAuth } from "../firebase/UserAuthContext"
 import { userProfileCreation } from "../firebase/UserProfileCreation"
 import { ErrorMessage } from "../components/ErrorMessage"
-
-const CREATE_NEW_USER_MUTATION = gql`
-  mutation CreateUserAccount($name: String!, $email: String!, $password: String!) {
-    createUserProfile(data: {name: $name, email: $email, password: $password}) {
-      id
-    }
-    publishUserProfile(where: {email: $email}) {
-      id
-    }
-  }
-`
+import { SuccessPopUp } from "../components/SuccessPopUp"
 
 export function SignIn() {
   const [formState, setFormState] = useState({
@@ -35,6 +24,8 @@ export function SignIn() {
   const [visibilityType, setVisibilityType] = useState('password');
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const [popUp, setPopUp] = useState(false);  
 
   const [error, setError] = useState('');
 
@@ -51,6 +42,17 @@ export function SignIn() {
 
   const navigate = useNavigate();
 
+  let navigateTimeout;
+
+  function timedNavigate(): void {
+    navigateTimeout = setTimeout(popUpNavigate, 5000)
+  }
+
+  function popUpNavigate(): any {
+    navigate('/adopt/adoption-list');
+    setPopUp(false);
+  }
+
   async function submitForm(e: FormEvent) {
     e.preventDefault();
     setError('');
@@ -61,7 +63,8 @@ export function SignIn() {
     try {
       await signUp(formState.email, formState.password).then(() => {
         userProfileCreation(formState.name, formState.email),
-        navigate('/adopt/adoption-list')
+        setPopUp(true),
+        timedNavigate()
       });
       setIsLoading(false); 
     } catch (erro: any) {
@@ -75,6 +78,9 @@ export function SignIn() {
   return (
     <div className='min-h-[100vh] flex flex-col justify-between'>
       <Header />
+
+      { popUp && <SuccessPopUp loadingBar={true} onClick={popUpNavigate} message="Seu cadastro foi realizado com sucesso" />}
+
       <main className="bg-left-img bg-no-repeat bg-left-bottom md:bg-right-img md:bg-right md:bg-contain">
         <section>
           <div className="flex justify-center pb-6">
