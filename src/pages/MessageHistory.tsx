@@ -47,7 +47,7 @@ export function MessageHistory() {
           </Link>
         </div>
 
-        <section className='md:mx-6 mb-4'>
+        <section className='md:mx-5 mb-4'>
           {messages.map((message: { animalName: string; message: string; created_at: any; uid: any }): any => (
             <MessageCard 
               animalName={message.animalName} 
