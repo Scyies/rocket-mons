@@ -64,12 +64,12 @@ export function Header() {
         <img src={whiteLogo} alt=""
           className='h-[31px] pr-12 hidden md:inline-flex pointer-events-none'
         />
-        <div className='pr-14'>
+        <div className='pr-14 active:scale-[0.95]'>
           <Link to={link}>
             <House size={30} />
           </Link>
         </div>
-        <div className={classNames('group', {
+        <div className={classNames('group active:scale-[0.95]', {
           'pointer-events-none': !athenticated,
           'pointer-events-auto': athenticated,
         })}>
@@ -85,7 +85,7 @@ export function Header() {
         'hidden': !athenticated,
         'inline-flex': athenticated,
       })}>
-        <Link to={`/adopt/profile=${uid}`} className='z-10' >
+        <Link to={`/adopt/profile=${uid}`} className='z-10 active:scale-[0.95]' >
           {avatar ? 
           <div className='group relative'>
             <img src={avatar} alt=""
@@ -107,7 +107,7 @@ export function Header() {
           }
         </Link>
         <div onClick={handleLogOut}
-          className='text-green-500 z-40 mt-1 bg-white rounded-full border-2 border-green-500 h-10 w-10 place-items-center relative group'
+          className='text-green-500 z-40 mt-1 bg-white rounded-full border-2 border-green-500 h-10 w-10 place-items-center relative group active:scale-[0.95]'
         >
           <div className='pl-[0.35rem] pt-[0.30rem]'>
             <SignOut size={25} />

@@ -21,7 +21,7 @@ export function Card(props: PropsInfo) {
   }
 
   return (
-    <div className="bg-gray-300 flex max-h-full w-full">
+    <div className="bg-gray-300 flex max-h-full w-full animate-cardRender transition-all">
       <div className="py-6 pl-6 pr-4">  
         <img src={props.img} alt=""
           className="h-[148px]"

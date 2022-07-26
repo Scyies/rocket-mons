@@ -20,10 +20,19 @@ module.exports = {
         progressBar: {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(100%)' },
+        },
+        cardRender: {
+          '0%': { transform: 'translateY(100%)',
+                  opacity: '0'        
+                },
+          '100%': { transform: 'translateY(0%)',
+                    opacity: '1'
+                  }
         }
       },
       animation: {
-        'progress': 'progressBar 5s linear'
+        'progress': 'progressBar 5s linear',
+        'cardRender': 'cardRender .3s linear'
       },
       backgroundImage: {
         'right-img': "url('assets/right-img.svg')",

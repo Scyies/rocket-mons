@@ -23,13 +23,11 @@ export function MessageHistory() {
         getMessageHistory()
       }).then(() => {
         setPopUp('')
-        console.log(popUp);
       })
     } catch (error) {
       console.log(error);
     }    
   }
-  console.log(popUp);
 
   async function getMessageHistory() {
     const messageInfo: DocumentData[] = [];
@@ -78,7 +76,7 @@ export function MessageHistory() {
             ))) : 
             (<div className="text-blue-500 flex flex-col place-items-center">
               <ChatTeardropText size={32} />
-              <p>Você não envio nenhuma mensagem ainda</p>
+              <p className="text-center px-3">Você não envio nenhuma mensagem ainda</p>
             </div>)
           }
         </section>
