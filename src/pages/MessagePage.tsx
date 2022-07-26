@@ -1,5 +1,6 @@
-import { getDocs, collection, where, query } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { ErrorMessage } from "../components/ErrorMessage";
 import { Footer } from "../components/Footer";
@@ -26,8 +27,11 @@ export function MessagePage() {
   
   const { user } = useUserAuth();
 
+  const navigate = useNavigate();
+
   function popUpNavigate(): void {
     setPopUp(false);
+    navigate('/adopt/message-history')
   }
 
   async function getAnimalsInfo() {

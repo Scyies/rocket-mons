@@ -1,5 +1,5 @@
 import { ChatDots } from "phosphor-react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 interface PropsInfo {
   name: string,

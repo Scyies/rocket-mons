@@ -26,4 +26,5 @@ export interface AdoptionMessage {
   message: string;
   name: string;
   telNumber: string;
+  id: string;
 }
