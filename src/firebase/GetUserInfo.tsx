@@ -1,7 +1,7 @@
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
 
-export async function getUserInfo(user: any, values: any) {
+export async function getUserInfo(user: any, values: any, animalName?: string | undefined | null) {
   const userInfo: any = [];    
 
   const q = query(collection (db, 'userProfile'), where('email', '==', user.email));
@@ -16,7 +16,8 @@ export async function getUserInfo(user: any, values: any) {
       telNumber: userInfo[0].telNumber,
       city: userInfo[0].city,
       bioMessage: userInfo[0].bioMessage,
-      avatarURL: userInfo[0].avatarURL
+      avatarURL: userInfo[0].avatarURL,
+      selectAnimal: animalName
     }
   )
 }

@@ -1,4 +1,3 @@
-import { gql } from "@apollo/client";
 import { Card } from "../components/Card";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
@@ -6,20 +5,7 @@ import { Loading } from "../components/Loading";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
 import { useEffect, useState } from "react";
-
-const GET_ANIMAL_INFO = gql`
-  query GetAnimals {
-    animals {
-      age
-      behavior
-      id
-      location
-      name
-      size
-      imageUrl
-    }
-  }
-`
+import { Animals } from "../interfaces/Interfaces";
 
 interface QueryTypes {
   imageURL: string; 
@@ -33,10 +19,10 @@ interface QueryTypes {
 
 export function Adopt() {
   const [animalsList, setAnimalsList]: any = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);  
 
   async function getAnimalsInfo() {
-    const animals: any = []
+    const animals: Animals[] = []
     setIsLoading(true);
 
     try {
@@ -44,7 +30,7 @@ export function Adopt() {
         snapshot.docs.forEach((doc) => {
           animals.push({... doc.data(), id: doc.id})
         });
-        setAnimalsList([... animals]);
+        setAnimalsList([... animals]);        
         setIsLoading(false);
       })  
     } catch (error: any) {

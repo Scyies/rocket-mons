@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, DocumentData, getDocs, query, QueryDocumentSnapshot, where } from "firebase/firestore";
 import { ChatTeardropText } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -15,21 +15,19 @@ export function MessageHistory() {
   const { user } = useUserAuth();
 
   async function getMessageHistory() {
-    const messageInfo: any = [];
+    const messageInfo: DocumentData[] = [];
 
     const q = query(collection (db, 'adoptionMessage'), where('email', '==', user.email));
 
-    const querySnapshot: any = await getDocs(q);
-    querySnapshot.forEach((doc: any) => {
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
       messageInfo.push(doc.data());
     });
 
     if(messageInfo.length > 0) {
       setMessages(messageInfo)
     } 
-
   }
-  console.log(messages);
   
   useEffect(() => {
     if(user) {getMessageHistory()}
@@ -57,7 +55,7 @@ export function MessageHistory() {
               key={message.uid}
             />
             ))) : 
-            (<div className="text-gray-700 flex flex-col place-items-center">
+            (<div className="text-blue-500 flex flex-col place-items-center">
               <ChatTeardropText size={32} />
               <p>Você não envio nenhuma mensagem ainda</p>
             </div>)

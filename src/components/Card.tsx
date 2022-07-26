@@ -16,6 +16,7 @@ export function Card(props: PropsInfo) {
   const navigate = useNavigate();
 
   function handleMessageClick() {
+    sessionStorage.setItem('selectedAnimal', props.name);
     navigate(`/adopt/adoption-message=${props.id}`)
   }
 

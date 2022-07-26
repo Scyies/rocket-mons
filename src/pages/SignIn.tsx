@@ -48,7 +48,7 @@ export function SignIn() {
     navigateTimeout = setTimeout(popUpNavigate, 5000)
   }
 
-  function popUpNavigate(): any {
+  function popUpNavigate(): void {
     navigate('/adopt/adoption-list');
     setPopUp(false);
   }

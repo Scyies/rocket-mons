@@ -1,4 +1,4 @@
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, where, query } from "firebase/firestore";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button } from "../components/Button";
 import { ErrorMessage } from "../components/ErrorMessage";
@@ -10,6 +10,7 @@ import { createNewMessage } from "../firebase/CreateNewMessage";
 import { db } from "../firebase/Firebase";
 import { getUserInfo } from "../firebase/GetUserInfo";
 import { useUserAuth } from "../firebase/UserAuthContext";
+import { Animals } from "../interfaces/Interfaces";
 
 export function MessagePage() {
   const [values, setValues] = useState({
@@ -29,12 +30,8 @@ export function MessagePage() {
     setPopUp(false);
   }
 
-  const url = window.location.href;
-
-  const id = url.substring(url.indexOf('=') + 1);  
-
   async function getAnimalsInfo() {
-    const animals: any = []
+    const animals: Animals[] = []
     setIsLoading(true);
 
     try {
@@ -42,6 +39,7 @@ export function MessagePage() {
         snapshot.docs.forEach((doc) => {
           animals.push({... doc.data(), id: doc.id})
         });
+        
         setAnimalsList([... animals]);
         setIsLoading(false);
       })  
@@ -76,11 +74,14 @@ export function MessagePage() {
     }
     
     setIsLoading(false);
-  }
+  }  
 
   useEffect(() => {
+    let animalName: string | undefined | null;
+    if(sessionStorage.getItem('selectedAnimal')){ animalName = sessionStorage.getItem('selectedAnimal')}
+
+    if(user){getUserInfo(user, setValues, animalName)}
     getAnimalsInfo()
-    if(user){getUserInfo(user, setValues)}
   },[]);
 
   return (
@@ -136,7 +137,7 @@ export function MessagePage() {
             >
                 Nome do animal
             </label>
-            <select name="" id="test" 
+            <select name="" 
             className="px-4 py-3 rounded-md shadow-md" 
             value={values.selectAnimal}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => setValues({ 
