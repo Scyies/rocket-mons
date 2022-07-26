@@ -81,15 +81,15 @@ export function Header() {
           </Link>
         </div>
       </div>
-      <div className='flex flex-col cursor-pointer z-40'>
+      <div className={classNames('flex flex-col cursor-pointer z-40', {
+        'hidden': !athenticated,
+        'inline-flex': athenticated,
+      })}>
         <Link to={`/adopt/profile=${uid}`} className='z-10' >
           {avatar ? 
           <div className='group relative'>
             <img src={avatar} alt=""
-            className={classNames('h-10 w-10 object-cover mt-11 mr-12 border-2 border-green-500 rounded-full z-40', {
-              'hidden': !athenticated,
-              'inline-flex': athenticated,
-            })}
+            className='h-10 w-10 object-cover mt-11 mr-12 border-2 border-green-500 rounded-full z-40'
             />
             <p className='absolute text-green-500 -left-8 bottom-2 border-2 border-green-500 px-2 rounded-md font-semibold text-sm z-10 opacity-0 group-hover:-translate-x-6 group-hover:opacity-100 group-hover:ease-in-out group-hover:duration-1000'>
               Perfil
@@ -98,10 +98,7 @@ export function Header() {
             :
           <div className='group relative'>
             <img src={defaultProfile} alt=""
-            className={classNames('h-10 w-10 mt-11 mr-12 rounded-full z-40', {
-              'hidden': !athenticated,
-              'inline-flex': athenticated,
-            })}
+            className='h-10 w-10 mt-11 mr-12 rounded-full z-40'
             />
             <p className='absolute text-green-500 -left-8 bottom-2 border-2 border-green-500 px-2 rounded-md font-semibold text-sm z-10 opacity-0 group-hover:-translate-x-6 group-hover:opacity-100 group-hover:ease-in-out group-hover:duration-1000'>
                 Perfil
@@ -110,15 +107,12 @@ export function Header() {
           }
         </Link>
         <div onClick={handleLogOut}
-          className={classNames('text-green-500 z-40 mt-1 bg-white rounded-full border-2 border-green-500 h-10 w-10 place-items-center relative group', {
-            'hidden': !athenticated,
-            'inline-flex': athenticated
-          })}
+          className='text-green-500 z-40 mt-1 bg-white rounded-full border-2 border-green-500 h-10 w-10 place-items-center relative group'
         >
-          <div className='pl-[6px]'>
+          <div className='pl-[0.35rem] pt-[0.30rem]'>
             <SignOut size={25} />
           </div>
-          <p className='absolute right-4 border-2 border-green-500 px-2 rounded-md font-semibold text-sm z-10 opacity-0 group-hover:-translate-x-6 group-hover:opacity-100 group-hover:ease-in-out group-hover:duration-1000'>
+          <p className='absolute right-4 bottom-1 border-2 border-green-500 px-2 rounded-md font-semibold text-sm z-10 opacity-0 group-hover:-translate-x-6 group-hover:opacity-100 group-hover:ease-in-out group-hover:duration-1000'>
             Sair
           </p>
         </div>
