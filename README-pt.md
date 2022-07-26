@@ -22,10 +22,8 @@ Se tiver alguns erro durante a criação de uma nova conta e quiser ver a aplica
   - [X] Desenvolver as páginas como mobile first
 - [X] Segunda semana
   - [X] Adatar as páginas feitas para serem responsivas
-- [X] Terceira semana
+- [X] Terceira e quarta semanas
   - [X] Renderização dinâmica das páginas com JavaScript
-- [ ] Quarta semana
-  - [ ] Carregando...
 
 ### Tecnologias
 
@@ -45,3 +43,11 @@ Se tiver alguns erro durante a criação de uma nova conta e quiser ver a aplica
 - [X] Loading States durante carregamento de dados da API
 
 - [X] Histórico das mensagens enviadas
+ - [X] Opção de excluir mensagens já enviadas
+
+- [X] PopUps de confirmação
+
+- [X] Animações
+  - [X] Render de cards animados
+  - [X] Botões animados
+  - [X] Loading States animados

@@ -19,10 +19,8 @@ If you experience some errors while trying do create a new account and want to s
   - [X] Build the pages following the mobile first approach
 - [X] Second week
   - [X] Adapt the built pages to be responsive
-- [X] Third week
+- [X] Third and fourth weeks
   - [X] Dynamic rendering of pages with JavaScript
-- [ ] Fourth week
-  - [ ] Loading...
 
 ### Techonologies
 
@@ -42,3 +40,11 @@ If you experience some errors while trying do create a new account and want to s
 - [X] Loading States for API requests
 
 - [X] History of messages sent page
+  - [X] Option to delete sent messages
+
+- [X] Confirmation popups
+
+- [X] Animations
+  - [X] Animated cards rendering
+  - [X] Animated button clicks
+  - [X] Animated loading states
