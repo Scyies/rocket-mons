@@ -131,6 +131,7 @@ export function Profile() {
             <Input name="Nome" type="text"
             value={values.name}
             id='name-input'
+            holder="Seu nome completo"
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               name: e.target.value
@@ -146,6 +147,7 @@ export function Profile() {
             </label>
             <Input name="tel" type="tel" 
             value={values.telNumber} 
+            holder="Seu telefone para contato"
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               telNumber: e.target.value
@@ -160,6 +162,7 @@ export function Profile() {
             </label>
             <Input name="cidade" type="text" 
             value={values.city} 
+            holder="A cidade em que você mora"
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
               city: e.target.value
@@ -174,6 +177,7 @@ export function Profile() {
             </label>
             <textarea name="message" id="message" 
               cols={15} rows={5} 
+              placeholder="Nos conte um pouco sobre você"
               className="rounded-md mb-8 pl-4 pt-4 shadow-md min-w-[240px] max-w-[336px] md:max-w-[492px] self-center w-full"
               defaultValue={values.bioMessage}
               onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setValues({ 

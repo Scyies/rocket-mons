@@ -43,7 +43,7 @@ export function MessageHistory() {
 
         <div className="flex justify-between p-1 pb-5 md:p-5 m-5 border-b border-b-gray-500">
           <h1 className='text-blue-500 font-bold pt-1 md:pt-2'>Histórico de mensagens</h1>
-          <Link to="/adopt/adoption-message">
+          <Link to="/adopt/adoption-message=0">
             <Button name='Nova mensagem' />
           </Link>
         </div>

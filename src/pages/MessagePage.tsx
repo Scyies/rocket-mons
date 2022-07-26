@@ -29,6 +29,10 @@ export function MessagePage() {
     setPopUp(false);
   }
 
+  const url = window.location.href;
+
+  const id = url.substring(url.indexOf('=') + 1);  
+
   async function getAnimalsInfo() {
     const animals: any = []
     setIsLoading(true);

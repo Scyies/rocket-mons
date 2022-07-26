@@ -82,7 +82,7 @@ export function Header() {
         </div>
       </div>
       <div className='flex flex-col cursor-pointer z-40'>
-        <Link to={`/adopt/profile${uid}`} className='z-10' >
+        <Link to={`/adopt/profile=${uid}`} className='z-10' >
           {avatar ? 
           <div className='group relative'>
             <img src={avatar} alt=""

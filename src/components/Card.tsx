@@ -1,5 +1,5 @@
 import { ChatDots } from "phosphor-react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 interface PropsInfo {
   name: string,
@@ -7,10 +7,17 @@ interface PropsInfo {
   size: string,
   behavior: string,
   location: string,
-  img: string
+  img: string,
+  id: any
 }
 
 export function Card(props: PropsInfo) {
+
+  const navigate = useNavigate();
+
+  function handleMessageClick() {
+    navigate(`/adopt/adoption-message=${props.id}`)
+  }
 
   return (
     <div className="bg-gray-300 flex max-h-full w-full">
@@ -35,11 +42,12 @@ export function Card(props: PropsInfo) {
           <div className="text-green-500 mr-2 cursor-pointer">
             <ChatDots size={22} />
           </div>
-          <Link to={'/adopt/adoption-message'}
+          <i 
+            onClick={handleMessageClick}
             className="text-xs pt-1 cursor-pointer"
           >
             Falar com responsável
-          </Link>
+          </i>
         </div>
       </div>
     </div>

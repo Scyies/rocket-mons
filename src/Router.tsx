@@ -13,13 +13,13 @@ export function Router() {
   return (
     <UserAuthContextProvider>
       <Routes>
-        <Route path={`/`} element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/log-in" element={<LogIn />} />
-        <Route path={`/adopt/adoption-list`} element={<ProtectedRoute><Adopt /></ProtectedRoute>} />
-        <Route path="/adopt/adoption-message" element={<MessagePage />} />
-        <Route path="/adopt/profile:uid" element={<Profile />} />
-        <Route path="/adopt/message-history" element={<MessageHistory />} />
+        <Route path="/adopt/adoption-list" element={<ProtectedRoute> <Adopt /> </ProtectedRoute>} />
+        <Route path="/adopt/adoption-message=:uid" element={<ProtectedRoute> <MessagePage /> </ProtectedRoute>} />
+        <Route path="/adopt/profile=:uid" element={<ProtectedRoute> <Profile /> </ProtectedRoute>} />
+        <Route path="/adopt/message-history" element={<ProtectedRoute> <MessageHistory /> </ProtectedRoute>} />
       </Routes>
     </UserAuthContextProvider>
   )

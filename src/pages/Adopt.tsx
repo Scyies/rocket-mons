@@ -75,6 +75,7 @@ export function Adopt() {
             behavior={doc.behavior}
             location={doc.location}
             key={doc.id}
+            id={doc.id}
           />)
         )}
       </section>}
