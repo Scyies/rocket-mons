@@ -20,7 +20,7 @@ export function SuccessPopUp(props: Props) {
           <p className="z-30 text-gray-900 font-bold mt-4 mb-4 text-center p-3">{props.message}</p>
           <div className="relative overflow-hidden rounded-md m-3 mt-0">
             <Button name='Ok' click={props.onClick} />
-            { loadingBar && <span className="absolute bottom-0 left-0 w-[180px] max-w-[180px] h-1 bg-green-500 animate-progress"></span>}
+            { loadingBar && <span className="absolute bottom-0 left-0 w-full h-1 bg-green-500 animate-progress"></span>}
           </div>
         </div>
       </div>
