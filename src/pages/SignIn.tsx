@@ -70,8 +70,9 @@ export function SignIn() {
     } catch (erro: any) {
       if(erro.code === 'auth/invalid-email') {setError('Favor informar um e-mail válido.')}
       if(erro.code === 'auth/network-request-failed') {setError('Houve um erro na conexão, favor tentar novamente.')}
+      if(erro.code === 'auth/email-already-in-use') {setError('Este email já foi cadastrado.')}
       setIsLoading(false);
-      console.log(erro.message)
+      console.log(erro.code)
     }
   }
 
