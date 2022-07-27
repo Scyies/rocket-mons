@@ -115,10 +115,10 @@ export function LogIn() {
           <Button name="Entrar" loading={isLoading} />
         </form>
 
-        <div className="absolute top-0 right-0 overflow-hidden h-[220px] w-[170px]">  
+        <div className="absolute top-0 right-0 overflow-hidden h-[220px] w-[170px] z-40">  
           <img src={pawns} 
             alt=""
-            className="translate-x-5"
+            className="translate-x-5 z-40"
           />
         </div>
         
