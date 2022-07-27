@@ -8,14 +8,11 @@ module.exports = {
       'md': '768px',
       'lg': '1440px'
     },
-    backgroindSize: {
-      'auto': 'auto',
-        'cover': 'cover',
-        'contain': 'contain',
-       '50%': '50%',
-       '16': '4rem',
-    },
     extend: {
+      backgroundSize: {
+        'mobile': '5rem',
+        'tablet': '7rem'
+      },
       keyframes: {
         progressBar: {
           '0%': { transform: 'translateX(0%)' },
