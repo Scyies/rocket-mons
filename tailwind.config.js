@@ -28,11 +28,20 @@ module.exports = {
           '100%': { transform: 'translateY(0%)',
                     opacity: '1'
                   }
+        },
+        noCardsRender: {
+          '0%': { transform: 'translateY(-50%)',
+                  opacity: '0'        
+                },
+          '100%': { transform: 'translateY(0%)',
+                    opacity: '1'
+                  }
         }
       },
       animation: {
         'progress': 'progressBar 5s linear',
-        'cardRender': 'cardRender .3s linear'
+        'cardRender': 'cardRender .3s linear',
+        'noCardsRender': 'noCardsRender .3s linear'
       },
       backgroundImage: {
         'right-img': "url('assets/right-img.svg')",

@@ -74,7 +74,7 @@ export function MessageHistory() {
               delete={(e: any) => { setPopUp(e.target.id) }}
             />
             ))) : 
-            (<div className="text-blue-500 flex flex-col place-items-center">
+            (<div className="text-blue-500 flex flex-col place-items-center animate-noCardsRender transition-all">
               <ChatTeardropText size={32} />
               <p className="text-center px-3">Você não envio nenhuma mensagem ainda</p>
             </div>)
