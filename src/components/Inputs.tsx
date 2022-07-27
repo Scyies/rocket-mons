@@ -6,7 +6,7 @@ interface PropsItems{
   type: string,
   holder?: string,
   value?: any,
-  change?: ChangeEventHandler,
+  change?: ChangeEventHandler | any,
   padrao?: string,
   textcenter?: string,
   required?: boolean,

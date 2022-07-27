@@ -47,16 +47,16 @@ export function Profile() {
     e.preventDefault();
     
     if(values.name === undefined || !values.name) {
-      return setError('Por favor informe seu nome');
+      return setError('Por favor informe seu nome'), setIsLoading(false)
     }
     if(values.telNumber === undefined || !values.telNumber) {
-      return setError('Por favor informe seu telefone');
+      return setError('Por favor informe seu telefone'), setIsLoading(false)
     }
     if(values.city === undefined || !values.city) {
-      return setError('Por favor informe sua cidade');
+      return setError('Por favor informe sua cidade'), setIsLoading(false)
     }
     if(values.bioMessage === undefined || !values.bioMessage) {
-      return setError('Por favor preencha o campo "Sobre"');
+      return setError('Por favor preencha o campo "Sobre"'), setIsLoading(false)
     }
 
     try {
@@ -71,13 +71,20 @@ export function Profile() {
       setPopUp(true);
       setIsLoading(false);
     } catch (error: any) {
-      if(error.code === 'invalid-argument') {setError('O tamanho da imagem escolhida é muito grande.')}
-      setError(error.message);
+      if(error.code === 'invalid-argument'){setError('O tamanho da imagem escolhida é muito grande.')}
+      else {setError(error.message);}
       console.log(error.code);
       setIsLoading(false);
     }
     setIsLoading(false);
   };
+
+  function numberMask(input: string) {
+    input=input.replace(/\D/g,"");
+    input=input.replace(/^(\d{2})(\d)/g,"($1) $2");
+    input=input.replace(/(\d)(\d{4})$/,"$1-$2"); 
+    return input
+  }
 
   useEffect(() => {
     if(user){getUserInfo(user, setValues)}
@@ -150,7 +157,7 @@ export function Profile() {
             holder="Seu telefone para contato"
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
-              telNumber: e.target.value
+              telNumber: numberMask(e.target.value)
             })} />
           </div>
 

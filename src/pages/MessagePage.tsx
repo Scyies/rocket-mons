@@ -57,9 +57,9 @@ export function MessagePage() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    if(!values.name || !values.telNumber || !values.selectAnimal || !values.adoptionMessage) return setError('Favor preencher todos os campos.')
-
     setIsLoading(true);
+    
+    if(!values.name || !values.telNumber || !values.selectAnimal || !values.adoptionMessage) return setError('Favor preencher todos os campos.'), setIsLoading(false);
 
     try {
       await createNewMessage(
