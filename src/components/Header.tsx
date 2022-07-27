@@ -65,7 +65,7 @@ export function Header() {
           className='h-[31px] pr-12 hidden md:inline-flex pointer-events-none'
         />
         <div className='pr-14 active:scale-[0.95]'>
-          <Link to={link}>
+          <Link to={link} className='hover:text-blue-500 transition-all'>
             <House size={30} />
           </Link>
         </div>
@@ -77,7 +77,7 @@ export function Header() {
           'point-events-none': !athenticated,
           'point-events-auto': athenticated,
         })} > 
-            <EnvelopeSimple size={30} />
+            <EnvelopeSimple size={30} className='hover:text-blue-500 transition-all' />
           </Link>
         </div>
       </div>

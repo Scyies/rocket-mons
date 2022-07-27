@@ -128,6 +128,7 @@ export function MessagePage() {
             <Input name="Telefone" 
             holder="Insira seu telefone e/ou whatsapp" 
             type="tel" 
+            mask={true}
             value={values.telNumber}
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,

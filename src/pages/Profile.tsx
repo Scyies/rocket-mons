@@ -10,6 +10,7 @@ import { userProfileUpdate } from "../firebase/UserProfileUpdate";
 import { ErrorMessage } from "../components/ErrorMessage";
 import { getUserInfo } from "../firebase/GetUserInfo";
 import { SuccessPopUp } from "../components/SuccessPopUp";
+import { telMask } from "../utils/masks";
 
 export function Profile() {
   const [values, setValues]: any = useState({
@@ -71,20 +72,12 @@ export function Profile() {
       setPopUp(true);
       setIsLoading(false);
     } catch (error: any) {
-      if(error.code === 'invalid-argument'){setError('O tamanho da imagem escolhida é muito grande.')}
-      else {setError(error.message);}
+      setError(error.message);
       console.log(error.code);
       setIsLoading(false);
     }
     setIsLoading(false);
   };
-
-  function numberMask(input: string) {
-    input=input.replace(/\D/g,"");
-    input=input.replace(/^(\d{2})(\d)/g,"($1) $2");
-    input=input.replace(/(\d)(\d{4})$/,"$1-$2"); 
-    return input
-  }
 
   useEffect(() => {
     if(user){getUserInfo(user, setValues)}
@@ -155,9 +148,10 @@ export function Profile() {
             <Input name="tel" type="tel" 
             value={values.telNumber} 
             holder="Seu telefone para contato"
+            mask={true}
             change={(e: ChangeEvent<HTMLInputElement>) => setValues({ 
               ...values,
-              telNumber: numberMask(e.target.value)
+              telNumber: e.target.value
             })} />
           </div>
 

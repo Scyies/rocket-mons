@@ -1,5 +1,6 @@
 import classNames from "classnames"
-import { ChangeEventHandler, LegacyRef } from "react"
+import { ChangeEventHandler, FormEvent, LegacyRef } from "react"
+import { telMask } from "../utils/masks"
 
 interface PropsItems{
   name: string,
@@ -12,9 +13,16 @@ interface PropsItems{
   required?: boolean,
   ref?: LegacyRef<HTMLInputElement>,
   id?: string,
+  mask?: any,
 }
 
 export function Input(props: PropsItems) {
+  function handleKeyUp(e: FormEvent<HTMLInputElement>) {
+    if(props.mask){
+      telMask(e)
+    } else return
+  }
+
   return (
       <input 
         type={props.type} 
@@ -30,6 +38,7 @@ export function Input(props: PropsItems) {
         autoComplete="off"
         ref={props.ref}
         id={props.id}
+        onKeyUp={handleKeyUp}
       />
   )
 }
